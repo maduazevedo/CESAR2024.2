@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login com Google</title>
+</head>
+<body>
+    <h1>LOGIN</h1>
+    <p>Por favor, entre com sua conta do Google:</p>
+    <a href="{{ url_for('login') }}">Entrar com Google</a>
+    
+    {% if session.user %}
+        <h2>Olá, {{ session.user['name'] }}!</h2>
+        <a href="{{ url_for('logout') }}">Sair</a>
+    {% endif %}
+</body>
+</html>
