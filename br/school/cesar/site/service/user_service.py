@@ -11,7 +11,7 @@ class UserService:
 
         if usuario_existente is not None:
             flash("Usuário já está registrado.", "info")
-            return True  # Se o usuário já existir, retorna False
+            return True  # Se o usuário já existir, retorna True
 
         try:
             # Insere o usuário se não existir
@@ -28,7 +28,6 @@ class UserService:
         if curso_discente:
             self.user_model.inserir_discente(curso_discente, nome_social, email)
         if curso_docente:
-            cursos_docente_str = ','.join(curso_docente)
             self.user_model.inserir_docente(curso_docente, nome_social, email)
         if cluster:
             self.user_model.inserir_cluster(cluster, nome_social, email)
