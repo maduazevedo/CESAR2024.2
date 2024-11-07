@@ -15,8 +15,8 @@
             const isColaborador = Array.from(roles).some(role => role.value === 'colaborador');
 
             // Mostrar ou esconder os campos com base nas seleções
-            document.getElementById('curso-discente').classList.toggle('hidden', !isDiscente);
-            document.getElementById('curso-docente').classList.toggle('hidden', !isDocente);
+            document.getElementById('curso_discente').classList.toggle('hidden', !isDiscente);
+            document.getElementById('curso_docente').classList.toggle('hidden', !isDocente);
             document.getElementById('cluster').classList.toggle('hidden', !isColaborador);
         }
     </script>
@@ -25,10 +25,10 @@
     <h1>Bem-vindo!</h1>
     <p>Olá, {{ email }}! Este é o seu primeiro acesso.</p>
 
-    <form action="{{ url_for('process_first_login') }}" method="POST">
+    <form action="{{ url_for('main.process_first_login') }}" method="POST">
         <div>
             <h3>Por qual nome prefere ser chamado no Cesar?</h3>
-            <input type="text" name="nome_chamado" placeholder="Informe seu nome">
+            <input type="text" name="nome_social" placeholder="Informe seu nome" required>
         </div>
 
         <h2>Selecione seu tipo:</h2>
@@ -42,9 +42,10 @@
             <input type="checkbox" name="role" value="colaborador" onclick="showFields()"> Colaborador
         </label>
 
-        <div id="curso-discente" class="hidden">
+        <!-- Campos para Discente -->
+        <div id="curso_discente" class="hidden">
             <h3>Curso que estuda:</h3>
-            <select name="curso">
+            <select name="curso_discente">
                 <option value="">Selecione seu curso</option>
                 <option value="Ciencia da Computação">Ciência da Computação</option>
                 <option value="Design">Design</option>
@@ -54,19 +55,25 @@
             </select>
         </div>
 
-        <div id="curso-docente" class="hidden">
+        <!-- Campos para Docente -->
+        <div id="curso_docente" class="hidden">
             <h3>Cursos que ensina:</h3>
-            <label><input type="checkbox" name="curso_docente" value="Ciencia da Computação"> Ciência da Computação</label><br>
-            <label><input type="checkbox" name="curso_docente" value="Design"> Design</label><br>
-            <label><input type="checkbox" name="curso_docente" value="GTI"> GTI</label><br>
-            <label><input type="checkbox" name="curso_docente" value="ADS"> ADS</label><br>
-            <label><input type="checkbox" name="curso_docente" value="Ciencia de dados">(Mestrado) Ciência de dados</label><br>
-            <!-- Adicione mais cursos conforme necessário -->
+            <label><input type="checkbox" name="curso_docente[]" value="Ciencia da Computação"> Ciência da Computação</label><br>
+            <label><input type="checkbox" name="curso_docente[]" value="Design"> Design</label><br>
+            <label><input type="checkbox" name="curso_docente[]" value="GTI"> GTI</label><br>
+            <label><input type="checkbox" name="curso_docente[]" value="ADS"> ADS</label><br>
+            <label><input type="checkbox" name="curso_docente[]" value="Ciencia de dados">(Mestrado) Ciência de dados</label><br>
         </div>
 
+        <!-- Campos para Colaborador -->
         <div id="cluster" class="hidden">
             <h3>Cluster:</h3>
-            <input type="text" name="cluster" placeholder="Informe seu cluster">
+            <select name="cluster">
+                <option value="">Selecione seu cluster</option>
+                <option value="Cluster 1">Cluster 1</option>
+                <option value="Cluster 2">Cluster 2</option>
+                <option value="Cluster 3">Cluster 3</option>
+            </select>
         </div>
 
         <button type="submit">Salvar Informações</button>

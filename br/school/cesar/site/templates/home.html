@@ -10,6 +10,6 @@
     <h2>Olá, {{ session.user['name'] }}!</h2>
     <h2>Email {{ email }}!</h2>
     <p>Você está logado com sua conta do Google.</p>
-    <a href="{{ url_for('logout') }}">Sair</a>
+    <a href="{{ url_for('main.logout') }}">Sair</a>
 </body>
 </html>
