@@ -46,6 +46,7 @@ def authorized():
 
 @main.route('/process_first_login', methods=['POST'])
 def process_first_login():
+    
     from main import google, mysql
     global user_service
 

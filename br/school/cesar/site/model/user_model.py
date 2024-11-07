@@ -19,12 +19,8 @@ class UserModel:
     def inserir_usuario(self, nome, email):
         cursor = self.mysql.connection.cursor()
         try:
-            cursor.execute(
-                "INSERT INTO publicadores (nome, email) VALUES (%s, %s)",
-                (nome, email)
-            )
+            cursor.execute("INSERT INTO publicadores (nome, email) VALUES (%s, %s)", (nome, email))
             self.mysql.connection.commit()
-            return cursor.lastrowid 
         except Exception as e:
             self.mysql.connection.rollback()
             raise e
@@ -32,10 +28,9 @@ class UserModel:
             cursor.close()
             
     def inserir_discente(self, curso_discente, nome_social, email):
+        cursor = self.mysql.connection.cursor()
         try:
-            cursor = self.mysql.connection.cursor()
-            query = """INSERT INTO discente (curso, nome_social, email) VALUES (%s, %s, %s)"""
-            cursor.execute(query, (curso_discente, nome_social, email))
+            cursor.execute("INSERT INTO discente (curso, nome_social, email) VALUES (%s, %s, %s)", (curso_discente, nome_social, email))
             self.mysql.connection.commit()
             cursor.close()
         except Exception as e:
@@ -43,14 +38,11 @@ class UserModel:
             self.mysql.connection.rollback()
 
     def inserir_docente(self, curso_docente, nome_social, email):
+        cursor = self.mysql.connection.cursor()
         try:
-            cursor = self.mysql.connection.cursor()
             
-            # Itera sobre a lista de cursos docentes
-            for curso in curso_docente:
-                query = """INSERT INTO docente (curso, nome_social, email) VALUES (%s, %s, %s)"""
-                cursor.execute(query, (curso, nome_social, email))
-            
+            cursos_concatenados = ', '.join(curso_docente)
+            cursor.execute("INSERT INTO docente (curso, nome_social, email) VALUES (%s, %s, %s)", (cursos_concatenados, nome_social, email))
             self.mysql.connection.commit()
             cursor.close()
         except Exception as e:
@@ -58,10 +50,9 @@ class UserModel:
             self.mysql.connection.rollback()
 
     def inserir_cluster(self, cluster, nome_social, email):
+        cursor = self.mysql.connection.cursor()
         try:
-            cursor = self.mysql.connection.cursor()
-            query = """INSERT INTO colaborador (cluster, nome_social, email) VALUES (%s, %s, %s)"""
-            cursor.execute(query, (cluster, nome_social, email))
+            cursor.execute("INSERT INTO colaborador (cluster, nome_social, email) VALUES (%s, %s, %s)", (cluster, nome_social, email))
             self.mysql.connection.commit()
             cursor.close()
         except Exception as e:
