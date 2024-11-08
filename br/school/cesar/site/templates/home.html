@@ -3,13 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
+    <title>Registro de Produção</title>
+    <style>
+        .form-step {
+            display: none; /* Esconde todas as etapas */
+        }
+        .active {
+            display: block; /* Exibe a etapa ativa */
+        }
+    </style>
 </head>
 <body>
-    <h1>HOME</h1>
-    <h2>Olá, {{ session.user['name'] }}!</h2>
-    <h2>Email {{ email }}!</h2>
-    <p>Você está logado com sua conta do Google.</p>
-    <a href="{{ url_for('main.logout') }}">Sair</a>
+
+    <form id="multiStepForm">
+        <!-- PASSO 1-->
+        <div class="form-step active" id="step1">
+            <h1>Instruções para o registro</h1>
+            <h2>Olá, {{ session.user['name'] }}!</h2>
+            <p>Somos a área de Conhecimento e precisamos da sua ajuda para mapear de forma contínua a nossa produção bibliográfica, técnica e artística.</p>
+            <p><strong>O QUE CONTA COMO PRODUÇÃO?</strong></p>
+
+            <p><strong>BIBLIOGRÁFICA ⤵️</strong></p>
+            <ul>
+                <li>ARTIGO EM JORNAL OU REVISTA (Artigos APROVADOS)</li>
+                <li>ARTIGO EM PERIÓDICO (Artigos APROVADOS)</li>
+                <li>LIVRO (Inclui CAPÍTULOS e ORGANIZAÇÃO)</li>
+                <li>TRABALHO EM ANAIS (Artigos APROVADOS em Eventos Científicos)</li>
+            </ul>
+
+            <p><strong>TÉCNICA ⤵️</strong></p>
+            <ul>
+                <li>APRESENTAÇÃO DE TRABALHO</li>
+                <li>CURSO DE CURTA DURAÇÃO</li>
+                <li>DESENVOLVIMENTO DE APLICATIVO</li>
+                <li>DESENVOLVIMENTO DE MATERIAL DIDÁTICO E INSTRUCIONAL</li>
+                <li>DESENVOLVIMENTO DE PRODUTO</li>
+                <li>DESENVOLVIMENTO DE TÉCNICA</li>
+                <li>EDITORIA</li>
+                <li>ORGANIZAÇÃO DE EVENTO</li>
+                <li>PATENTE</li>
+                <li>PROGRAMA DE RÁDIO, TV OU PODCAST</li>
+                <li>RELATÓRIO DE PESQUISA</li>
+                <li>SERVIÇOS TÉCNICOS</li>
+            </ul>
+
+            <p><strong>ARTÍSTICA ⤵️</strong></p>
+            <ul>
+                <li>ARTES VISUAIS</li>
+                <li>OUTRA PRODUÇÃO CULTURAL</li>
+            </ul>
+
+            <p>Este formulário serve para capturar as informações de uma única produção por vez. Sendo assim, se você tiver realizado mais de uma, precisará preencher o formulário mais de uma vez.</p>
+            <p>Nós lembraremos frequentemente a todos para preencherem este formulário. No entanto, você não precisa esperar... guarde este link e nos informe toda vez que realizar uma produção. Assim as informações não acumulam e o trabalho de todos fica mais fácil!</p>
+
+            <br><br>
+            <button type="button" onclick="nextStep(1)">Iniciar Registro</button>
+        </div>
+
+        <!--PASSO 2 -->
+        <div class="form-step" id="step2">
+            <h2>Dados básicos da produção</h2>
+            <button type="button" onclick="prevStep(2)">Voltar</button>
+            <button type="button" onclick="nextStep(2)">Avançar</button>
+        </div>
+
+        <!-- PASSO 3 -->
+        <div class="form-step" id="step3">
+            <h2>Participantes</h2>
+            <button type="button" onclick="prevStep(3)">Voltar</button>
+            <button type="button" onclick="nextStep(3)">Avançar</button>
+        </div>
+
+        <!-- PASSO 4 -->
+        <div class="form-step" id="step4">
+            <h2>Dados adicionais</h2>
+            <button type="button" onclick="prevStep(4)">Voltar</button>
+            <button type="button" onclick="nextStep(4)">Avançar</button>
+        </div>
+
+        <!-- PASSO 5 -->
+        <div class="form-step" id="step5">
+            <h2>Parcerias</h2>
+            <button type="button" onclick="prevStep(5)">Voltar</button>
+            <button type="submit" onclick="Enviar dados">Enviar dados</button>
+        </div>
+    </form>
+
+    <script>
+
+        // Função para avançar para a próxima etapa
+        function nextStep(currentStep) {
+            var currentDiv = document.getElementById('step' + currentStep);
+            var nextDiv = document.getElementById('step' + (currentStep + 1));
+
+            currentDiv.classList.remove('active');
+            nextDiv.classList.add('active');
+        }
+
+        // Função para voltar para a etapa anterior
+        function prevStep(currentStep) {
+            var currentDiv = document.getElementById('step' + currentStep);
+            var prevDiv = document.getElementById('step' + (currentStep - 1));
+
+            currentDiv.classList.remove('active');
+            prevDiv.classList.add('active');
+        }
+    </script>
+
 </body>
 </html>

@@ -58,3 +58,5 @@ class UserModel:
         except Exception as e:
             print(f"Erro ao inserir cluster: {e}")
             self.mysql.connection.rollback()
+        
+    
