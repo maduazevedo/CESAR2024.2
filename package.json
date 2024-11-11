@@ -1,0 +1,15 @@
+{
+  "name": "cesar2024.2",
+  "version": "1.0.0",
+  "description": "Com esse projeto, visamos o desenvolvimento de uma aplicação web para possibilitar a coleta efetiva de produçoes acadêmicas pela CESAR School.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.14"
+  }
+}
