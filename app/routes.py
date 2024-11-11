@@ -86,9 +86,20 @@ def process_first_login():
         print(f"Erro inesperado: {str(e)}")
         print("Detalhes do erro:", traceback.format_exc())
         return "Ocorreu um erro inesperado, tente novamente mais tarde.", 500
-    
+        
+        
 @main.route('/logout')
 def logout():
     session.pop('user', None)
     flash('Você foi desconectado.', 'info')
-    return redirect(url_for('main.home'))
+    return redirect(url_for('home'))
+
+
+@main.route('/process_submit_form')
+def form():
+    return render_template('home.html', email = session['email'])
+
+
+@main.route('/process_view_prod')
+def producoes():
+    return render_template('producoes.html', email = session['email'])

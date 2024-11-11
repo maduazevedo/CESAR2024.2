@@ -1,6 +1,7 @@
 from flask import flash
 from model.user_model import UserModel
 
+
 class UserService:
     def __init__(self, mysql):
         self.user_model = UserModel(mysql)
