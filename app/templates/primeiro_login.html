@@ -1,83 +1,96 @@
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Primeiro Login</title>
-    <style>
-        .hidden { display: none; }
-    </style>
-    <script>
-        function showFields() {
-            const roles = document.querySelectorAll('input[name="role"]:checked');
-            const isDiscente = Array.from(roles).some(role => role.value === 'discente');
-            const isDocente = Array.from(roles).some(role => role.value === 'docente');
-            const isColaborador = Array.from(roles).some(role => role.value === 'colaborador');
-
-            // Mostrar ou esconder os campos com base nas seleções
-            document.getElementById('curso_discente').classList.toggle('hidden', !isDiscente);
-            document.getElementById('curso_docente').classList.toggle('hidden', !isDocente);
-            document.getElementById('cluster').classList.toggle('hidden', !isColaborador);
-        }
-    </script>
+    <link rel="stylesheet" href="/static/css/cadastro.css">
+    <script src="/static/js/script.js" defer></script>
 </head>
+
 <body>
-    <h1>Bem-vindo!</h1>
-    <p>Olá, {{ email }}! Este é o seu primeiro acesso.</p>
-
-    <form action="{{ url_for('main.process_first_login') }}" method="POST">
-        <div>
-            <h3>Por qual nome prefere ser chamado no Cesar?</h3>
-            <input type="text" name="nome_social" placeholder="Informe seu nome" required>
+    <div class="container">
+        <div class="left-side">
+            <!-- Background no CSS -->
         </div>
 
-        <h2>Selecione seu tipo:</h2>
-        <label>
-            <input type="checkbox" name="role" value="discente" onclick="showFields()"> Discente
-        </label>
-        <label>
-            <input type="checkbox" name="role" value="docente" onclick="showFields()"> Docente
-        </label>
-        <label>
-            <input type="checkbox" name="role" value="colaborador" onclick="showFields()"> Colaborador
-        </label>
+        <div class="right-side">
+            <form action="{{ url_for('main.process_first_login') }}" method="POST">
+                <header>
+                    <h1>Precisamos te conhecer!</h1>
+                    <p>Preencha os dados do primeiro acesso.</p>
+                </header>
 
-        <!-- Campos para Discente -->
-        <div id="curso_discente" class="hidden">
-            <h3>Curso que estuda:</h3>
-            <select name="curso_discente">
-                <option value="">Selecione seu curso</option>
-                <option value="Ciencia da Computação">Ciência da Computação</option>
-                <option value="Design">Design</option>
-                <option value="GTI">GTI</option>
-                <option value="ADS">ADS</option>
-                <option value="Ciencia de dados">(Mestrado) Ciência de dados</option>
-            </select>
+                <div class="form-group">
+                    <label for="name" class="input-title">Apelido ou nome social<span class="red-color">*</span></label>
+                    <input type="text" id="name" name="nome_social" placeholder="Digite aqui o seu nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="curriculo" class="input-title">Link do currículo lattes/linkedin/researchGate<span class="red-color">*</span></label>
+                    <input type="text" id="curriculo" name="curriculo" placeholder="Cole o link aqui" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-title">Tipo de usuário<span class="red-color">*</span></label>
+                    <div class="checkbox-group">
+                        <label for="colaborador">
+                            <input type="checkbox" id="colaborador" name="role" value="colaborador" required>
+                            Colaborador
+                        </label>
+
+                        <label for="discente">
+                            <input type="checkbox" id="discente" name="role" value="discente">
+                            Discente
+                        </label>
+
+                        <label for="docente">
+                            <input type="checkbox" id="docente" name="role" value="docente">
+                            Docente
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group hide student-area">
+                    <label for="curso_discente" class="input-title">Curso de estudo<span class="red-color">*</span></label>
+                    <select id="curso-estudo" name="curso_discente">
+                        <option value="" disabled selected>Selecione um curso</option>
+                        <option value="Design">Design</option>
+                        <option value="Ciencia da Computação">Ciência da Computação</option>
+                        <option value="Gestao de TI">Gestão de Tecnologia da Informação</option>
+                        <option value="Sistemas de Informação">Sistemas de Informação</option>
+                    </select>
+                </div>
+
+                <div class="form-group hide teacher-area">
+                    <label for="curso_docente" class="input-title">Curso que leciona<span class="red-color">*</span></label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="curso_docente[]" value="Design">
+                        <label for="leciona-design">Design</label>
+
+                        <input type="checkbox" name="curso_docente[]" value="Ciencia da Computacao">
+                        <label for="leciona-ciencia">Ciência da Computação</label>
+
+                        <input type="checkbox" name="curso_docente[]" value="Gestao de Tecnologia da Informação">
+                        <label for="leciona-gestao">Gestão de Tecnologia da Informação</label>
+                    </div>
+                </div>
+
+                <div class="form-group hide colaborator-area">
+                    <label for="cluster" class="input-title">Cluster<span class="red-color">*</span></label>
+                    <select id="cluster" name="cluster">
+                        <option value="" disabled selected>Selecione um cluster</option>
+                        <option value="cluster 1">Cluster 1</option>
+                        <option value="cluster 2">Cluster 2</option>
+                        <option value="cluster 3">Cluster 3</option>
+                    </select>luster 
+                </div>
+
+                <button type="submit" class="submit-btn">Continuar</button>
+            </form>
         </div>
-
-        <!-- Campos para Docente -->
-        <div id="curso_docente" class="hidden">
-            <h3>Cursos que ensina:</h3>
-            <label><input type="checkbox" name="curso_docente[]" value="Ciencia da Computação"> Ciência da Computação</label><br>
-            <label><input type="checkbox" name="curso_docente[]" value="Design"> Design</label><br>
-            <label><input type="checkbox" name="curso_docente[]" value="GTI"> GTI</label><br>
-            <label><input type="checkbox" name="curso_docente[]" value="ADS"> ADS</label><br>
-            <label><input type="checkbox" name="curso_docente[]" value="Ciencia de dados">(Mestrado) Ciência de dados</label><br>
-        </div>
-
-        <!-- Campos para Colaborador -->
-        <div id="cluster" class="hidden">
-            <h3>Cluster:</h3>
-            <select name="cluster">
-                <option value="">Selecione seu cluster</option>
-                <option value="Cluster 1">Cluster 1</option>
-                <option value="Cluster 2">Cluster 2</option>
-                <option value="Cluster 3">Cluster 3</option>
-            </select>
-        </div>
-
-        <button type="submit">Salvar Informações</button>
-    </form>
+    </div>
 </body>
+
 </html>
