@@ -27,32 +27,32 @@ class UserModel:
         finally:
             cursor.close()
             
-    def inserir_discente(self, curso_discente, nome_social, email):
+    def inserir_discente(self, curso_discente, nome_social, curriculo, email):
         cursor = self.mysql.connection.cursor()
         try:
-            cursor.execute("INSERT INTO discente (curso, nome_social, email) VALUES (%s, %s, %s)", (curso_discente, nome_social, email))
+            cursor.execute("INSERT INTO discente (curso, nome_social, curriculo, email) VALUES (%s, %s, %s, %s)", (curso_discente, nome_social, curriculo, email))
             self.mysql.connection.commit()
             cursor.close()
         except Exception as e:
             print(f"Erro ao inserir discente: {e}")
             self.mysql.connection.rollback()
 
-    def inserir_docente(self, curso_docente, nome_social, email):
+    def inserir_docente(self, curso_docente, nome_social, curriculo, email):
         cursor = self.mysql.connection.cursor()
         try:
             
             cursos_concatenados = ', '.join(curso_docente)
-            cursor.execute("INSERT INTO docente (curso, nome_social, email) VALUES (%s, %s, %s)", (cursos_concatenados, nome_social, email))
+            cursor.execute("INSERT INTO docente (curso, nome_social, curriculo, email) VALUES (%s, %s, %s, %s)", (cursos_concatenados, nome_social, curriculo, email))
             self.mysql.connection.commit()
             cursor.close()
         except Exception as e:
             print(f"Erro ao inserir docente: {e}")
             self.mysql.connection.rollback()
 
-    def inserir_cluster(self, cluster, nome_social, email):
+    def inserir_cluster(self, cluster, nome_social, curriculo, email):
         cursor = self.mysql.connection.cursor()
         try:
-            cursor.execute("INSERT INTO colaborador (cluster, nome_social, email) VALUES (%s, %s, %s)", (cluster, nome_social, email))
+            cursor.execute("INSERT INTO colaborador (cluster, nome_social, curriculo, email) VALUES (%s, %s, %s, %s)", (cluster, nome_social, curriculo, email))
             self.mysql.connection.commit()
             cursor.close()
         except Exception as e:

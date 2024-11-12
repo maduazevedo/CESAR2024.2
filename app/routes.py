@@ -8,7 +8,7 @@ user_service = None
 
 @main.route('/')
 def home():
-    return render_template('login.html')
+    return render_template('index.html')
 
 @main.route('/login')
 def login():
@@ -56,7 +56,7 @@ def process_first_login():
     curso_docente = request.form.getlist('curso_docente[]')  # Captura todos os cursos que o docente ensina
     cluster = request.form.get('cluster')  # Captura o cluster do colaborador
     nome_social = request.form.get('nome_social')  # Captura o nome social do usuário
-    
+    curriculo = request.form.get('curriculo')
     # Validação básica (adicionei para garantir que os campos necessários não estão vazios)
     
     # Verificar se pelo menos uma role foi selecionada
@@ -72,6 +72,7 @@ def process_first_login():
             curso_discente, 
             cluster, 
             nome_social, 
+            curriculo,
             session['email']
         )
 

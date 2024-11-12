@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login com Google</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-side">
+            <!-- Background no CSS -->
+        </div>
+
+        <div class="right-side">
+            <div class="login-area">
+                <header>
+                    <h1>Bem-vindo!</h1>
+                    <p>Aqui você pode fazer registro de todas as suas produções</p>
+                </header>
+
+                <div class="login">
+                    <h1>Faça login</h1>
+                    <p>Acesse a sua conta pelo e-mail do Google</p>
+
+                    <button class="login-btn" type="button" onclick="window.location.href='{{ url_for('main.login') }}'">
+                        <img src="/static/img/google.png">
+                        Continue com o Google
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

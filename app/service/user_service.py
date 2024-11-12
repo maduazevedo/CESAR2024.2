@@ -25,13 +25,13 @@ class UserService:
             return False
         
 
-    def inserir_dados_adicionais(self, curso_docente=None, curso_discente=None, cluster=None, nome_social= None, email = None):
+    def inserir_dados_adicionais(self, curso_docente=None, curso_discente=None, cluster=None, nome_social= None, curriculo = None, email = None):
         if curso_discente:
-            self.user_model.inserir_discente(curso_discente, nome_social, email)
+            self.user_model.inserir_discente(curso_discente, nome_social, curriculo, email)
         if curso_docente:
-            self.user_model.inserir_docente(curso_docente, nome_social, email)
+            self.user_model.inserir_docente(curso_docente, nome_social, curriculo, email)
         if cluster:
-            self.user_model.inserir_cluster(cluster, nome_social, email)
+            self.user_model.inserir_cluster(cluster, nome_social, curriculo, email)
 
             
     def buscar_usuario_por_email(self, email):
