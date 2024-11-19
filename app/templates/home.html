@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <form id="multiStepForm">
+    <form id="multiStepForm" action="/upload" method="post" enctype="multipart/form-data">
         <!-- PASSO 1-->
         <div class="form-step active" id="step1">
             <h1>Instruções para o registro</h1>
@@ -58,12 +58,47 @@
             <p>Nós lembraremos frequentemente a todos para preencherem este formulário. No entanto, você não precisa esperar... guarde este link e nos informe toda vez que realizar uma produção. Assim as informações não acumulam e o trabalho de todos fica mais fácil!</p>
 
             <br><br>
+
+            <!--BOTAO DE REDIRECIONAMENTO PERFIL (APROVEITAR)-->
+            <a href="{{ url_for('main.perfil') }}">
+                <button type="button">Ir para Perfil</button>
+            </a><br><br>
+
             <button type="button" onclick="nextStep(1)">Iniciar Registro</button>
         </div>
 
         <!--PASSO 2 -->
         <div class="form-step" id="step2">
             <h2>Dados básicos da produção</h2>
+
+            <label for="nome_producao">Qual o nome da produção?</label><br>
+            <textarea id="nome_producao" name="nome_producao"></textarea><br><br>
+
+            <label for="descricao_producao">Descrição da Produção:</label><br>
+            <textarea id="descricao_producao" name="descricao_producao" placeholder="Informe detalhes da produção, tais como local de publicação, edital, etc"></textarea><br><br>
+
+            <label for="tipo_producao">Escolha o tipo de produção:</label><br>
+            <select id="tipo_producao" name="tipo_producao"></select><br><br>
+
+            <!-- UPLOAD DA PRODUÇÃO -->
+            <label for="arquivo_producao">
+                Arquivo:
+                <br>
+                <small>Por favor, anexe aqui o seu projeto ou produção</small>
+            </label><br>
+            <input type="file" id="arquivo_producao" name="arquivo_producao" accept=".pdf, .jpg, .jpeg, .png"><br><br>
+
+            <!-- COMPROVANTE -->
+            <label for="comprovante">
+                Comprovante de submissão de editais / aceite de publicação
+                <br>
+                <small>Caso a produção tenha utilizado ou pretenda utilizar algum dos laboratórios, indique qual(is)</small>
+            </label><br>
+            <input type="file" id="comprovante" name="comprovante" accept=".pdf, .jpg, .jpeg, .png"><br><br>
+
+            <label for="nome_veiculo">Qual o nome do veículo, evento ou entidade científica internacional?</label><br>
+            <textarea id="nome_veiculo" name="nome_veiculo"></textarea><br><br>
+
             <button type="button" onclick="prevStep(2)">Voltar</button>
             <button type="button" onclick="nextStep(2)">Avançar</button>
         </div>
@@ -71,6 +106,65 @@
         <!-- PASSO 3 -->
         <div class="form-step" id="step3">
             <h2>Participantes</h2>
+            <!--Vinculo-->
+            <label for="vinculo">Qual foi o vínculo informado na submissão da produção aprovada?</label><br>
+
+            <input type="radio" id="dicente" name="vinculo" value="dicente">
+            <label for="dicente">Discente</label><br>
+
+            <input type="radio" id="docente" name="vinculo" value="docente">
+            <label for="docente">Docente</label><br>
+
+            <input type="radio" id="colaborador" name="vinculo" value="colaborador">
+            <label for="colaborador">Colaborador</label><br><br>
+
+            <!--coautor?-->
+            <label for="colaborador_autor">A produção informada possui colaboradores do Cesar como autor?</label><br>
+            <textarea id="colaborador_autor" name="colaborador_autor"></textarea><br><br>
+
+            <label for="colaborador_externo">A produção informada possui pessoas externas ao cesar? Se sim, digite nome e email</label><br>
+            <textarea id="colaborador_externo" name="colaborador_externo"></textarea><br><br>
+
+            <label for="docente_autor">A produção informada possui docente(s) da School como autor? Se sim, informe o nome do professor/pesquisador</label><br>
+            <textarea id="docente_autor" name="docente_autor"></textarea><br><br>
+            
+            <label for="alunos_autor">A produção informada possui alunos(as) da School como autor?</label><br>
+            <textarea id="alunos_autor" name="alunos_autor"></textarea><br><br>
+
+            <!--NIVEL DA PRODUÇÃO-->
+            <label for="nivel_producao">Selecione o curso relacionado:</label>
+            <div id="radio-container">
+                <input type="radio" id="curso_1" name="curso" value="Mestrado em Design (Recife)">
+                <label for="curso_1">Mestrado em Design (Recife)</label><br>
+                
+                <input type="radio" id="curso_2" name="curso" value="Mestrado em Design (Manaus)">
+                <label for="curso_2">Mestrado em Design (Manaus)</label><br>
+                
+                <input type="radio" id="curso_3" name="curso" value="Mestrado em Engenharia de Software">
+                <label for="curso_3">Mestrado em Engenharia de Software</label><br>
+                
+                <input type="radio" id="curso_4" name="curso" value="Doutorado em Engenharia de Software">
+                <label for="curso_4">Doutorado em Engenharia de Software</label><br>
+                
+                <input type="radio" id="curso_5" name="curso" value="Graduação em Design">
+                <label for="curso_5">Graduação em Design</label><br>
+                
+                <input type="radio" id="curso_6" name="curso" value="Graduação em Ciência da Computação">
+                <label for="curso_6">Graduação em Ciência da Computação</label><br>
+                
+                <input type="radio" id="curso_7" name="curso" value="Graduação Tecnológica em Gestão de Tecnologia da Informação (GTI)">
+                <label for="curso_7">Graduação Tecnológica em Gestão de Tecnologia da Informação (GTI)</label><br>
+                
+                <input type="radio" id="curso_8" name="curso" value="Graduação Tecnológica em Análise e Desenvolvimento de Sistemas (ADS)">
+                <label for="curso_8">Graduação Tecnológica em Análise e Desenvolvimento de Sistemas (ADS)</label><br>
+                
+                <input type="radio" id="curso_9" name="curso" value="Graduação em Sistemas de Informação (SI)">
+                <label for="curso_9">Graduação em Sistemas de Informação (SI)</label><br>
+                
+                <input type="radio" id="curso_10" name="curso" value="Não foi desenvolvida com discente">
+                <label for="curso_10">Não foi desenvolvida com discente</label><br>
+            </div>
+
             <button type="button" onclick="prevStep(3)">Voltar</button>
             <button type="button" onclick="nextStep(3)">Avançar</button>
         </div>
@@ -78,6 +172,57 @@
         <!-- PASSO 4 -->
         <div class="form-step" id="step4">
             <h2>Dados adicionais</h2>
+            <!--Projeto de pesquisa ou de desenvolvimento-->
+            <label for="projeto_pesq">
+                Projeto de pesquisa ou desenvolvimento<br>
+                <small>Caso esta produção faça parte de algum projeto em andamento ou finalizado, favor informar o titulo ou o cliente</small>
+            </label><br>
+            <textarea id="projeto_pesq" name="projeto_pesq"></textarea><br><br>
+
+            <!--Palavras chave-->
+            <label for="palavras_chave">Palavras-chave da produção</label><br>
+            <textarea id="palavras_chave" name="palavras_chave"></textarea><br><br>
+        
+            <!--GRUPO PESQUISA-->
+            <label for="grupo_pesquisa">Grupo de pesquisa
+                <br><small>Se a pesquisa estiver vinculada a algum dos grupos de pesquisa abaixo, indique qual.</small>
+            </label><br>
+            <select id="grupo_pesquisa" name="grupo_pesquisa"></select><br><br>
+            
+            <!--LABORATORIO-->
+            <label for="laboratorios">Laboratórios:</label>
+            <div id="checkbox-container">
+                <input type="checkbox" id="lab_1" name="laboratorios" value="GARAGEM - Espaço Garagem">
+                <label for="lab_1">GARAGEM - Espaço Garagem</label><br>
+
+                <input type="checkbox" id="lab_2" name="laboratorios" value="LIGA - Laboratório de Inovação e Geração de Artefatos">
+                <label for="lab_2">LIGA - Laboratório de Inovação e Geração de Artefatos</label><br>
+
+                <input type="checkbox" id="lab_3" name="laboratorios" value="LECI - Laboratório de Experimentação, Criação e Inovação">
+                <label for="lab_3">LECI - Laboratório de Experimentação, Criação e Inovação</label><br>
+
+                <input type="checkbox" id="lab_4" name="laboratorios" value="LASFE - Laboratório de Sistemas Físicos e Embarcados">
+                <label for="lab_4">LASFE - Laboratório de Sistemas Físicos e Embarcados</label><br>
+
+                <input type="checkbox" id="lab_5" name="laboratorios" value="IKNOT - Laboratório de IoT Industrial KNoT">
+                <label for="lab_5">IKNOT - Laboratório de IoT Industrial KNoT</label><br>
+
+                <input type="checkbox" id="lab_6" name="laboratorios" value="Laboratórios de computadores">
+                <label for="lab_6">Laboratórios de computadores</label><br>
+
+                <input type="checkbox" id="lab_7" name="laboratorios" value="Laboratórios Macs">
+                <label for="lab_7">Laboratórios Macs</label><br>
+
+                <input type="checkbox" id="lab_8" name="laboratorios" value="Laboratório de internet das coisas (Ball)">
+                <label for="lab_8">Laboratório de internet das coisas (Ball)</label><br>
+
+                <input type="checkbox" id="lab_9" name="laboratorios" value="Laboratório de Sistemas Embarcados (Magic Labs)">
+                <label for="lab_9">Laboratório de Sistemas Embarcados (Magic Labs)</label><br>
+
+                <input type="checkbox" id="lab_10" name="laboratorios" value="Outro">
+                <label for="lab_10">Outro</label><br>
+            </div>
+
             <button type="button" onclick="prevStep(4)">Voltar</button>
             <button type="button" onclick="nextStep(4)">Avançar</button>
         </div>
@@ -85,12 +230,86 @@
         <!-- PASSO 5 -->
         <div class="form-step" id="step5">
             <h2>Parcerias</h2>
+            <!--Palavras chave-->
+            <label for="inst_parceiras">Instituições parceiras
+                <br>
+                <small>Liste as Instituições parceiras envolvidas nesta produção, caso haja(m)</small>
+            </label><br>
+            <textarea id="inst_parceiras" name="inst_parceiras"></textarea><br><br>
+            
+            <label for="carta_anuencia">
+                Carta de anuência de parceiros
+                <br>
+                <small>Suporta até 10 arquivos. Max 10MB por aquivo</small>
+            </label><br>
+            <input type="file" id="carta_anuencia" name="carta_anuencia" accept=".pdf, .jpg, .jpeg, .png"><br><br>
+
+
             <button type="button" onclick="prevStep(5)">Voltar</button>
-            <button type="submit" onclick="Enviar dados">Enviar dados</button>
+            <!-- Enviar os dados do formulário -->
+            <button type="submit">Enviar dados</button>
         </div>
     </form>
 
     <script>
+        // Preencher as opções de tipo de produção dinamicamente
+        const producoes = [
+            "PRODUÇÃO BIBLIOGRÁFICA | ARTIGO EM JORNAL OU REVISTA (Artigos APROVADOS)",
+            "PRODUÇÃO BIBLIOGRÁFICA | ARTIGO EM PERIÓDICO (Artigos APROVADOS)",
+            "PRODUÇÃO BIBLIOGRÁFICA | LIVRO/CAPÍTULO DE LIVRO",
+            "PRODUÇÃO BIBLIOGRÁFICA | TRABALHO EM ANAIS",
+            "PRODUÇÃO TÉCNICA | APRESENTAÇÃO DE TRABALHO",
+            "PRODUÇÃO TÉCNICA | CURSO DE CURTA DURAÇÃO",
+            "PRODUÇÃO TÉCNICA | DESENVOLVIMENTO DE APLICATIVO",
+            "PRODUÇÃO TÉCNICA | DESENVOLVIMENTO DE MATERIAL DIDÁTICO E INSTRUCIONAL",
+            "PRODUÇÃO TÉCNICA | DESENVOLVIMENTO DE PRODUTO",
+            "PRODUÇÃO TÉCNICA | DESENVOLVIMENTO DE TÉCNICA",
+            "PRODUÇÃO TÉCNICA | EDITORIA",
+            "PRODUÇÃO TÉCNICA | ORGANIZAÇÃO DE EVENTO",
+            "PRODUÇÃO TÉCNICA | PATENTE",
+            "PRODUÇÃO TÉCNICA | PROGRAMA DE RADIO, TV OU PODCAST",
+            "PRODUÇÃO TÉCNICA | RELATÓRIO DE PESQUISA",
+            "PRODUÇÃO TÉCNICA | SERVIÇOS TÉCNICOS",
+            "PRODUÇÃO ARTÍSTICA | ARTES VISUAIS",
+            "PRODUÇÃO ARTÍSTICA | OUTRA PRODUÇÃO CULTURAL"
+        ];
+        const lista_grupo_pesquisa = [
+            "IQATS - Aplicação Quântica em Tecnologia e Software",
+            "AI BOX Lab: Inteligência Artificial Aplicada",
+            "GIGA - Design e inovação",
+            "NIX - Laboratório de Design de Narrativas, Imaginação e Experiências",
+            "GENTE - Aspectos Humanos e Sociais do Software",
+            "SANKOFA - Design, Cultura e Memória",
+            "GPSDN - Sistemas Distribuídos e Computação em Nuvem",
+            "NaCRe - Interseção de Ciência da Computação e Ciências Naturais",
+            "LISA - Laboratório de Inovação Social e Ambiental",
+            "KNOT - Grupo de Pesquisa em Internet das Coisas",
+            "GPRS - Grupo de Pesquisa em Redes e Segurança da Informação",
+            "GARAGINO - Grupo de Estudos em Computação Física naturais",
+            "TAG - Test Automation Group"
+        ];
+
+        // Selecionando o elemento <select> pelo seu id
+         selectElement = document.getElementById('tipo_producao');
+
+        // Preenchendo as opções do select com o array de produções
+        producoes.forEach((producao) => {
+            option = document.createElement('option');
+            option.value = producao;
+            option.textContent = producao;
+            selectElement.appendChild(option);
+        });
+
+         // Preenchendo as opções do select com a lista de laboratórios
+        selectElement_lab = document.getElementById('grupo_pesquisa');
+
+        lista_grupo_pesquisa.forEach((laboratorio) => {
+            option = document.createElement('option');
+            option.value = laboratorio;
+            option.textContent = laboratorio;
+            selectElement_lab.appendChild(option);
+        });     
+
 
         // Função para avançar para a próxima etapa
         function nextStep(currentStep) {
@@ -109,7 +328,34 @@
             currentDiv.classList.remove('active');
             prevDiv.classList.add('active');
         }
-    </script>
+  
+            
+        // Enviar os dados do formulário
 
+        document.getElementById("multiStepForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita que o formulário seja enviado da forma tradicional
+
+    const formData = new FormData(event.target); // Coleta os dados do formulário, incluindo os arquivos
+
+    fetch('/salvar_dados', {
+        method: 'POST',
+        body: formData // Não é necessário definir o Content-Type ao enviar FormData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Caso o envio seja bem-sucedido, redireciona para a página inicial
+            window.location.href = '/';
+        } else {
+            alert('Erro ao salvar os dados');
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro inesperado. Tente novamente.');
+    });
+});
+
+    </script>
 </body>
 </html>

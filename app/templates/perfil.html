@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* Estilo do link de voltar para home */
+        .back-link {
+            margin: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .profile-container {
+            width: 80%;
+            max-width: 1000px;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            flex-direction: column; /* Colocando o botão e foto dentro do box */
+        }
+
+        .profile-photo {
+            flex: 1;
+            max-width: 150px;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }
+
+        .form-container {
+            flex: 3;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="email"], input[type="url"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-left, .form-right {
+            width: 48%; 
+        }
+
+        /* Estilo para o botão editar */
+        .edit-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .edit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Link para voltar para a home -->
+    <!--<a href="{{ url_for('main.login') }}" class="back-link">Voltar para Home</a>-->
+    <a href="{{ url_for('main.home') }}">Ir para Home</a>
+    <div class="profile-container">
+        <!-- Foto de Perfil -->
+        <div class="profile-photo">
+            <!-- A foto de perfil será carregada a partir da sessão -->
+            <img src="{{ foto_perfil }}" alt="Foto de Perfil">
+        </div>
+
+        <!-- Formulário -->
+        <div class="form-container">
+            <div class="form-left">
+                <div class="form-group">
+                    <label for="nome-social">Nome social / Apelido</label>
+                    <!-- O nome será carregado da sessão -->
+                    <input type="text" id="nome-social" name="nome-social" value="{{ nome }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <!-- O e-mail será carregado da sessão -->
+                    <input type="email" id="email" name="email" value="{{ session['email'] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="curriculo">Link do currículo Lattes / LinkedIn / ResearchGate</label>
+                    <input type="url" id="curriculo" name="curriculo" required>
+                </div>
+            </div>
+
+            <div class="form-right">
+                <div class="form-group">
+                    <label for="curso-estudo">Curso de estudo</label>
+                    <input type="text" id="curso-estudo" name="curso-estudo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="curso-leciona">Curso que leciona</label>
+                    <input type="text" id="curso-leciona" name="curso-leciona" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cluster">Cluster</label>
+                    <input type="text" id="cluster" name="cluster" required>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
