@@ -1,7 +1,6 @@
 from flask import flash
 from model.user_model import UserModel
 
-
 class UserService:
     def __init__(self, mysql):
         self.user_model = UserModel(mysql)
@@ -35,5 +34,21 @@ class UserService:
 
             
     def buscar_usuario_por_email(self, email):
-        # Buscar o ID do usuário com base no e-mail
+        # TODO
         return self.user_model.buscar_usuario_por_email(email)
+    
+    def buscar_curriculo(self, email):
+        # TODO
+        return self.user_model.recuperar_curriculo(email)
+    
+    def recuperar_curso_discente(self, email):
+        # TODO
+        return self.user_model.recuperar_curso_discente(email)
+    
+    def recuperar_curso_docente(self, email):
+        # TODO
+        return self.user_model.recuperar_curso_docente(email)
+    
+    def recuperar_cluster(self, email):
+        # TODO
+        return self.user_model.recuperar_cluster(email)

@@ -10,7 +10,6 @@ app.secret_key = 'auth00'
 app.config.from_object(Config)
 
 
-
 # Configuração do MySQL
 mysql = MySQL(app)
 

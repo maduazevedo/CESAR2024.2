@@ -42,7 +42,7 @@ class UserModel:
         try:
             
             cursos_concatenados = ', '.join(curso_docente)
-            cursor.execute("INSERT INTO docente (curso, nome_social, curriculo, email) VALUES (%s, %s, %s, %s)", (cursos_concatenados, nome_social, curriculo, email))
+            cursor.execute("INSERT INTO docente (curso, nome_social, curriculo, email) VALUES (%s, %s, %s, %s)", (cursos_concatenados, nome_social, curriculo, email)) 
             self.mysql.connection.commit()
             cursor.close()
         except Exception as e:
@@ -59,4 +59,71 @@ class UserModel:
             print(f"Erro ao inserir cluster: {e}")
             self.mysql.connection.rollback()
         
-    
+
+    def recuperar_curriculo(self, email):
+        
+        cursor = self.mysql.connection.cursor()
+        try:
+            cursor.execute("""
+                SELECT COALESCE(di.curriculo, do.curriculo, c.curriculo) 
+                FROM publicadores p
+                LEFT JOIN discente di ON p.email = di.email
+                LEFT JOIN docente do ON p.email = do.email
+                LEFT JOIN colaborador c ON p.email = c.email
+                WHERE p.email = %s
+                LIMIT 1;""", (email,))
+            resultado = cursor.fetchone()  # Recupera o primeiro resultado da consulta
+            return resultado[0] if resultado else None  # Retorna o link do currículo ou None se não encontrado
+        except Exception as e:
+            print(f"Erro ao recuperar informações: {e}")
+            return None
+        finally:
+            cursor.close()
+
+
+    def recuperar_curso_discente(self, email):
+        
+        cursor = self.mysql.connection.cursor()
+        try:
+            cursor.execute(""" SELECT curso from discente where email = %s""", (email,))
+            
+            resultado = cursor.fetchone()  # Recupera o primeiro resultado da consulta
+            
+            if resultado:
+                return resultado[0]
+            return None
+        except Exception as e:
+            print(f"Erro ao recuperar cursos: {e}")
+            return None
+        finally:
+            cursor.close()
+
+
+    def recuperar_curso_docente(self, email):
+        cursor = self.mysql.connection.cursor()
+        try:
+            cursor.execute(""" SELECT curso from docente where email = %s""", (email,))
+            resultado = cursor.fetchone()  # Recupera o primeiro resultado da consulta
+            if resultado:
+                return resultado[0]
+            return None
+        except Exception as e:
+            print(f"Erro ao recuperar cursos: {e}")
+            return None
+        finally:
+            cursor.close()
+
+    def recuperar_cluster(self, email):
+        cursor = self.mysql.connection.cursor()
+        try:
+            cursor.execute(""" SELECT cluster from colaborador where email = %s""", (email,))
+            resultado = cursor.fetchone()  # Recupera o primeiro resultado da consulta
+            if resultado:
+                return resultado[0]
+            return None
+        except Exception as e:
+            print(f"Erro ao recuperar cluster: {e}")
+            return None
+        finally:
+            cursor.close()
+        
