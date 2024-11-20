@@ -10,9 +10,14 @@ main = Blueprint('main', __name__)
 user_service = None
 form_service = None
 
+
 @main.route('/')
-def home():
+def index():
     return render_template('index.html')
+
+@main.route('/home')
+def home():
+    return render_template('home.html')
 
 @main.route('/login')
 def login():
@@ -46,7 +51,7 @@ def authorized():
             return render_template('primeiro_login.html', email=email, foto_perfil=foto_perfil)
     else:
         flash('Acesso restrito a domínios @cesar.school e @cesar.org')
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.index'))
     
 
 @main.route('/process_first_login', methods=['POST'])
@@ -188,8 +193,24 @@ def producoes():
 
 @main.route('/perfil')
 def perfil():
+    from main import mysql, google
+    global user_service
     
+    if user_service is None:
+        user_service = UserService(mysql)
+        
+    # Recupera os dados da sessão do usuário
     foto_perfil = session['user'].get('picture', 'https://via.placeholder.com/150')
     nome = session['user']['name']
+    email = session['user']['email']  # Recuperando o e-mail do usuário
     
-    return render_template('perfil.html', foto_perfil=foto_perfil, nome=nome)
+    # Recuperando o currículo do usuário
+    curriculo = user_service.buscar_curriculo(email)
+    curso_discente = user_service.recuperar_curso_discente(email)
+    curso_docente = user_service.recuperar_curso_docente(email)
+    cluster = user_service.recuperar_cluster(email)
+            
+    # Passando tudo para o template
+    return render_template('perfil.html', foto_perfil=foto_perfil, nome=nome, email=email, curriculo=curriculo, curso_discente=curso_discente, curso_docente=curso_docente, cluster=cluster)
+
+

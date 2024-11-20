@@ -116,62 +116,32 @@
             <h2>Participantes</h2>
             <!--Vinculo-->
             <label for="vinculo">Qual foi o vínculo informado na submissão da produção aprovada?</label><br>
-            <div id="checkbox-container">
-            <input type="checkbox" id="dicente" name="vinculo" value="dicente">
-            <label for="dicente">Discente</label><br>
+            <div id="vinculo">
+            <input type="radio" id="Discente" name="vinculo" value="Discente">
+            <label for="Discente">Discente</label><br>
 
-            <input type="checkbox" id="docente" name="vinculo" value="docente">
-            <label for="docente">Docente</label><br>
+            <input type="radio" id="Docente" name="vinculo" value="Docente">
+            <label for="Docente">Docente</label><br>
 
-            <input type="checkbox" id="colaborador" name="vinculo" value="colaborador">
-            <label for="colaborador">Colaborador</label><br><br>
-<<<<<<< HEAD
-
-        <!-- Coautores -->
-            <label for="colaborador_coautor_checkbox">
-                <input type="checkbox" id="colaborador_coautor_checkbox" name="colaborador_coautor_checkbox" onclick="toggleField('colaborador_coautor')">
-                A produção informada possui colaboradores do Cesar como autor?
-            </label><br>
-            <textarea id="colaborador_coautor" name="colaborador_coautor" style="display:none;"></textarea><br><br>
-        
-            <label for="colaborador_externo_checkbox">
-                <input type="checkbox" id="colaborador_externo_checkbox" name="colaborador_externo_checkbox" onclick="toggleField('colaborador_externo')">
-                A produção informada possui pessoas externas ao cesar? Se sim, digite nome e email
-            </label><br>
-            <textarea id="colaborador_externo" name="colaborador_externo" style="display:none;"></textarea><br><br>
-        
-            <label for="docente_coautor_checkbox">
-                <input type="checkbox" id="docente_coautor_checkbox" name="docente_coautor_checkbox" onclick="toggleField('docente_coautor')">
-                A produção informada possui docente(s) da School como autor? Se sim, informe o nome do professor/pesquisador
-            </label><br>
-            <textarea id="docente_coautor" name="docente_coautor" style="display:none;"></textarea><br><br>
-        
-            <label for="aluno_coautor_checkbox">
-                <input type="checkbox" id="aluno_coautor_checkbox" name="aluno_coautor_checkbox" onclick="toggleField('aluno_coautor')">
-                A produção informada possui alunos(as) da School como autor?
-            </label><br>
-            <textarea id="aluno_coautor" name="aluno_coautor" style="display:none;"></textarea><br><br>
-        
-                    
-=======
+            <input type="radio" id="Colaborador" name="vinculo" value="Colaborador">
+            <label for="Colaborador">Colaborador</label><br><br>
             </div>
             <!--coautor?-->
-            <label for="colaborador_autor">A produção informada possui colaboradores do Cesar como autor?</label><br>
-            <textarea id="colaborador_autor" name="colaborador_autor"></textarea><br><br>
+            <label for="colaborador_coautor">A produção informada possui colaboradores do Cesar como autor?</label><br>
+            <textarea id="colaborador_coautor" name="colaborador_coautor"></textarea><br><br>
 
             <label for="colaborador_externo">A produção informada possui pessoas externas ao cesar? Se sim, digite nome e email</label><br>
             <textarea id="colaborador_externo" name="colaborador_externo"></textarea><br><br>
 
-            <label for="docente_autor">A produção informada possui docente(s) da School como autor? Se sim, informe o nome do professor/pesquisador</label><br>
-            <textarea id="docente_autor" name="docente_autor"></textarea><br><br>
+            <label for="docente_coautor">A produção informada possui docente(s) da School como autor? Se sim, informe o nome do professor/pesquisador</label><br>
+            <textarea id="docente_coautor" name="docente_coautor"></textarea><br><br>
             
-            <label for="alunos_autor">A produção informada possui alunos(as) da School como autor?</label><br>
-            <textarea id="alunos_autor" name="alunos_autor"></textarea><br><br>
->>>>>>> b15a6de152b80296ceb02f989793dda249a5c45f
+            <label for="aluno_coautor">A produção informada possui alunos(as) da School como autor?</label><br>
+            <textarea id="aluno_coautor" name="aluno_coautor"></textarea><br><br>
 
             <!--NIVEL DA PRODUÇÃO-->
             <label for="curso_relacionado">Selecione o curso relacionado:</label>
-            <div id="curso_relacionado">
+            <div>
                 <input type="radio" id="curso_1" name="curso_relacionado" value="Mestrado em Design (Recife)">
                 <label for="curso_1">Mestrado em Design (Recife)</label><br>
                 
