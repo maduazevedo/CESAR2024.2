@@ -1,0 +1,178 @@
+
+    /* Geral */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #FAF9F8;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    form {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+    }
+
+    h1, h2 {
+        color: #434343;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 0.9rem;
+        color: #666;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    textarea,
+    input[type="text"],
+    select,
+    input[type="file"] {
+        width: 100%; /* Largura máxima dentro do formulário */
+        max-width: calc(100% - 40px); /* Subtraindo o padding do formulário */
+        padding: 10px; /* Padding interno */
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #FAFAFA;
+        box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+    }
+
+    textarea {
+        height: 120px; /* Altura inicial */
+        max-height: 300px; /* Altura máxima */
+        resize: vertical; /* Redimensionamento apenas vertical */
+    }
+
+    textarea:focus, input:focus {
+        border-color: #0066ff;
+        outline: none;
+    }
+
+    small {
+        display: block; 
+        font-size: 14px; 
+        color: #888; 
+        font-weight: normal;
+    }
+
+    button {
+        display: inline-block;
+        background-color: #FF6A00;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+    button:hover {
+        background-color: #E6830D;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    /* Links estilizados */
+    a button {
+        margin-top: 0;
+    }
+
+    /* Estilo dos passos */
+    .form-step {
+        display: none;
+    }
+
+    .active {
+        display: block;
+    }
+
+ /* Estilo base do contêiner */
+#checkbox-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* Espaço entre os itens */
+}
+
+/* Ocultar a checkbox padrão */
+#checkbox-container input[type="checkbox"] {
+    display: none;
+}
+
+/* Estilo da label (checkbox customizada) */
+#checkbox-container label {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Estado de hover (ao passar o mouse) */
+#checkbox-container label:hover {
+    border-color: #FF6A00;
+    box-shadow: 0 0 5px #FF6A00;
+}
+
+/* Ícone customizado antes do texto */
+#checkbox-container label::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Estilo quando marcado */
+#checkbox-container input[type="checkbox"]:checked + label {
+    border-color: #FF6A00;
+    background-color: #ffede6;
+}
+
+/* Ícone preenchido quando marcado */
+#checkbox-container input[type="checkbox"]:checked + label::before {
+    background-color: #FF6A00;
+    border-color: #FF6A00;
+    content: "✔";
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+

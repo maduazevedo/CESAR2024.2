@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <title>Registro de Produção</title>
     <style>
         .form-step {
@@ -76,7 +76,7 @@
             <h2>Dados básicos da produção</h2>
 
             <label for="nome_producao">Qual o nome da produção?</label><br>
-            <textarea id="nome_producao" name="nome_producao"></textarea><br><br>
+            <input type="text" id="nome_producao" name="nome_producao" placeholder="Informe um nome para a sua produção"><br><br>
 
             <label for="descricao_producao">Descrição da Produção:</label><br>
             <textarea id="descricao_producao" name="descricao_producao" placeholder="Informe detalhes da produção, tais como local de publicação, edital, etc"></textarea><br><br>
@@ -116,15 +116,16 @@
             <h2>Participantes</h2>
             <!--Vinculo-->
             <label for="vinculo">Qual foi o vínculo informado na submissão da produção aprovada?</label><br>
-
-            <input type="radio" id="dicente" name="vinculo" value="dicente">
+            <div id="checkbox-container">
+            <input type="checkbox" id="dicente" name="vinculo" value="dicente">
             <label for="dicente">Discente</label><br>
 
-            <input type="radio" id="docente" name="vinculo" value="docente">
+            <input type="checkbox" id="docente" name="vinculo" value="docente">
             <label for="docente">Docente</label><br>
 
-            <input type="radio" id="colaborador" name="vinculo" value="colaborador">
+            <input type="checkbox" id="colaborador" name="vinculo" value="colaborador">
             <label for="colaborador">Colaborador</label><br><br>
+<<<<<<< HEAD
 
         <!-- Coautores -->
             <label for="colaborador_coautor_checkbox">
@@ -152,6 +153,21 @@
             <textarea id="aluno_coautor" name="aluno_coautor" style="display:none;"></textarea><br><br>
         
                     
+=======
+            </div>
+            <!--coautor?-->
+            <label for="colaborador_autor">A produção informada possui colaboradores do Cesar como autor?</label><br>
+            <textarea id="colaborador_autor" name="colaborador_autor"></textarea><br><br>
+
+            <label for="colaborador_externo">A produção informada possui pessoas externas ao cesar? Se sim, digite nome e email</label><br>
+            <textarea id="colaborador_externo" name="colaborador_externo"></textarea><br><br>
+
+            <label for="docente_autor">A produção informada possui docente(s) da School como autor? Se sim, informe o nome do professor/pesquisador</label><br>
+            <textarea id="docente_autor" name="docente_autor"></textarea><br><br>
+            
+            <label for="alunos_autor">A produção informada possui alunos(as) da School como autor?</label><br>
+            <textarea id="alunos_autor" name="alunos_autor"></textarea><br><br>
+>>>>>>> b15a6de152b80296ceb02f989793dda249a5c45f
 
             <!--NIVEL DA PRODUÇÃO-->
             <label for="curso_relacionado">Selecione o curso relacionado:</label>
