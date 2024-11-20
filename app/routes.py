@@ -1,10 +1,14 @@
 from flask import Blueprint, redirect, url_for, session, render_template, flash, request
 from service.user_service import UserService
+from service.form_service import FormService
+import json
+import traceback
 
 main = Blueprint('main', __name__)
 
 # Inicialize o serviço de usuário sem passar `mysql` aqui
 user_service = None
+form_service = None
 
 @main.route('/')
 def home():
@@ -21,7 +25,7 @@ def login():
 def authorized():
     # Importe `google` e `mysql` aqui para evitar o ciclo de importação
     from main import google, mysql
-    global user_service
+    global user_service, form_service
 
     if user_service is None:
         user_service = UserService(mysql)
@@ -50,6 +54,7 @@ def process_first_login():
     
     from main import google, mysql
     global user_service
+    
 
     # Captura dos dados do formulário
     roles = request.form.getlist('role')  # Retorna uma lista com os valores dos checkboxes
@@ -97,46 +102,89 @@ def logout():
     flash('Você foi desconectado.', 'info')
     return redirect(url_for('main.index'))  # Redireciona para a página de login
 
-@main.route('/process_submit_form')
-def form():
-    return render_template('home.html', email = session['email'])
+@main.route('/process_submit_form', methods=['POST'])
+def process_submit_form():
+    
+    from main import mysql
+    global form_service
+    
+    if form_service is None:
+        form_service = FormService(mysql)
+
+    #coletando dados do form 
+    nome = request.form.get('nome_producao')
+    descricao = request.form.get('descricao_producao')
+    tipo = request.form.get('tipo_producao')
+    arquivo = request.files.get('arquivo_producao')
+    comprovante_submissao = request.files.get('comprovante')
+    veiculo = request.form.get('nome_veiculo')
+    vinculo = request.form.get('vinculo')
+    curso_relacionado = request.form.get('curso_relacionado')
+    projeto_pesquisa = request.form.get('projeto_pesq')
+    palavra_chave = request.form.get('palavras_chave')
+    grupo_pesquisa = request.form.get('grupo_pesquisa')
+    laboratorio = request.form.getlist('laboratorios[]')
+    inst_parceiras = request.form.getlist('inst_parceiras')
+    carta_anuencia = request.files.get('carta_anuencia')
+    
+    #coletando dados que serão inseridos na tabela de coautores
+    colaborador_coautor = request.form.get('colaborador_coautor', ' ')
+    colaborador_externo = request.form.get('colaborador_externo', ' ')
+    docente_coautor = request.form.get('docente_coautor', ' ')
+    aluno_coautor = request.form.get('aluno_coautor', ' ')
+    
+    # Formatar coautores para um texto simples
+    coautores = []
+    if colaborador_coautor:
+        coautores.append(f"Colaboradores do Cesar: {colaborador_coautor}")
+    if colaborador_externo:
+        coautores.append(f"Colaboradores Externos: {colaborador_externo}")
+    if docente_coautor:
+        coautores.append(f"Docentes da School: {docente_coautor}")
+    if aluno_coautor:
+        coautores.append(f"Alunos da School: {aluno_coautor}")
+    
+    # Convertendo a lista de coautores para um único texto separado por vírgulas
+    laboratorio = ', '.join(laboratorio)
+    coautores = ', '.join(coautores) 
+    
+    try:
+        # Chamada ao serviço para cadastrar a produção com os dados fornecidos
+        form_service.cadastrar_producao(
+            nome, 
+            descricao, 
+            tipo, 
+            arquivo, 
+            comprovante_submissao, 
+            veiculo,
+            vinculo,
+            coautores, 
+            curso_relacionado, 
+            projeto_pesquisa, 
+            palavra_chave, 
+            grupo_pesquisa, 
+            laboratorio, 
+            inst_parceiras, 
+            carta_anuencia, 
+            session.get('email')  # Use session.get() para evitar KeyError caso 'email' não exista
+        )
+        
+
+        # Redireciona o usuário para a página 'home.html' após o sucesso
+        return render_template('home.html', email=session.get('email'))
+
+    except Exception as e:
+        # Captura e exibe o erro detalhado
+        print(f"Erro inesperado: {str(e)}")
+        print("Detalhes do erro:", traceback.format_exc())
+        return render_template('home.html')
+
 
 
 @main.route('/process_view_prod')
 def producoes():
     return render_template('producoes.html', email = session['email'])
 
-
-@main.route('/salvar_dados', methods=['POST'])
-def salvar_dados():
-    try:
-        # Convertendo campos de texto para um dicionario, melhor visualização.
-        #dados_texto = request.form.to_dict()
-        dados_texto = {key: request.form.getlist(key) if len(request.form.getlist(key)) > 1 else value for key, value in request.form.items()}
-
-        arquivos_recebidos = {}
-
-        # Mostrar arquivos recebidos dentro do request
-        for campo_arquivo, arquivo in request.files.items():
-            if arquivo:
-                # Apenas confirma que o arquivo foi recebido
-                arquivos_recebidos[campo_arquivo] = "Arquivo recebido com sucesso."
-                print(f"Arquivo recebido: {campo_arquivo} - {arquivo.filename}")
-
-        # Combina os dados de texto com a confirmação dos arquivos recebidos
-        dados_completos = {**dados_texto, **arquivos_recebidos}
-
-        # Exibe o dicionário completo para verificação
-        print("Dados recebidos:", dados_completos)
-
-       #####LOGICA DE SALVAR NO BD#######
-
-        # Redireciona para a página inicial após o processamento
-        return render_template('home.html', email=session['email'])
-
-    except Exception as e:
-        print(f"Erro inesperado: {str(e)}")
-        return "Ocorreu um erro inesperado, tente novamente mais tarde.", 500
 
 @main.route('/perfil')
 def perfil():

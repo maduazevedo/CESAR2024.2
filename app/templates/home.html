@@ -16,11 +16,12 @@
 </head>
 <body>
 
-    <form id="multiStepForm" action="/upload" method="post" enctype="multipart/form-data">
+    <form action="{{ url_for('main.process_submit_form') }}" method="POST" enctype="multipart/form-data">
         <!-- PASSO 1-->
         <div class="form-step active" id="step1">
             <h1>Instruções para o registro</h1>
-            <h2>Olá, {{ session.user['name'] }}!</h2>
+            <h3>Olá, {{ session.user['name'] }}!</h3>
+
             <p>Somos a área de Conhecimento e precisamos da sua ajuda para mapear de forma contínua a nossa produção bibliográfica, técnica e artística.</p>
             <p><strong>O QUE CONTA COMO PRODUÇÃO?</strong></p>
 
@@ -54,9 +55,10 @@
                 <li>OUTRA PRODUÇÃO CULTURAL</li>
             </ul>
 
+            <p>Como preencher?</p>
+            <p>Somos a área de Conhecimento e precisamos da sua ajuda para mapear de forma contínua a nossa produção bibliográfica, técnica e artística.</p>
             <p>Este formulário serve para capturar as informações de uma única produção por vez. Sendo assim, se você tiver realizado mais de uma, precisará preencher o formulário mais de uma vez.</p>
-            <p>Nós lembraremos frequentemente a todos para preencherem este formulário. No entanto, você não precisa esperar... guarde este link e nos informe toda vez que realizar uma produção. Assim as informações não acumulam e o trabalho de todos fica mais fácil!</p>
-
+            <p>Nós lembraremos frequentemente a todos para preencherem este formulário. No entanto, você não precisa esperar... guarde este link e nos informe toda vez que realizar uma produção. Assim as informações não acumulam e o trabalho de todos fica mais fácil!</p>
             <br><br>
 
             <!--BOTAO DE REDIRECIONAMENTO PERFIL (APROVEITAR)-->
@@ -66,6 +68,8 @@
 
             <button type="button" onclick="nextStep(1)">Iniciar Registro</button>
         </div>
+
+<!-------------------------------------------------------------------------------------------------------------------------------->
 
         <!--PASSO 2 -->
         <div class="form-step" id="step2">
@@ -92,11 +96,15 @@
             <label for="comprovante">
                 Comprovante de submissão de editais / aceite de publicação
                 <br>
-                <small>Caso a produção tenha utilizado ou pretenda utilizar algum dos laboratórios, indique qual(is)</small>
+                <small>Caso a produção tenha comprovante de submissão de editais ou aceite de publicação, anexe aqui</small>
             </label><br>
             <input type="file" id="comprovante" name="comprovante" accept=".pdf, .jpg, .jpeg, .png"><br><br>
 
-            <label for="nome_veiculo">Qual o nome do veículo, evento ou entidade científica internacional?</label><br>
+            <label for="nome_veiculo">
+                Qual o nome do veículo, evento ou entidade científica internacional?
+                <br>
+                <small>Caso a produção tenha sido publicada em algum veículo, anexe aqui</small>
+            </label><br>
             <textarea id="nome_veiculo" name="nome_veiculo"></textarea><br><br>
 
             <button type="button" onclick="prevStep(2)">Voltar</button>
@@ -118,51 +126,63 @@
             <input type="radio" id="colaborador" name="vinculo" value="colaborador">
             <label for="colaborador">Colaborador</label><br><br>
 
-            <!--coautor?-->
-            <label for="colaborador_autor">A produção informada possui colaboradores do Cesar como autor?</label><br>
-            <textarea id="colaborador_autor" name="colaborador_autor"></textarea><br><br>
-
-            <label for="colaborador_externo">A produção informada possui pessoas externas ao cesar? Se sim, digite nome e email</label><br>
-            <textarea id="colaborador_externo" name="colaborador_externo"></textarea><br><br>
-
-            <label for="docente_autor">A produção informada possui docente(s) da School como autor? Se sim, informe o nome do professor/pesquisador</label><br>
-            <textarea id="docente_autor" name="docente_autor"></textarea><br><br>
-            
-            <label for="alunos_autor">A produção informada possui alunos(as) da School como autor?</label><br>
-            <textarea id="alunos_autor" name="alunos_autor"></textarea><br><br>
+        <!-- Coautores -->
+            <label for="colaborador_coautor_checkbox">
+                <input type="checkbox" id="colaborador_coautor_checkbox" name="colaborador_coautor_checkbox" onclick="toggleField('colaborador_coautor')">
+                A produção informada possui colaboradores do Cesar como autor?
+            </label><br>
+            <textarea id="colaborador_coautor" name="colaborador_coautor" style="display:none;"></textarea><br><br>
+        
+            <label for="colaborador_externo_checkbox">
+                <input type="checkbox" id="colaborador_externo_checkbox" name="colaborador_externo_checkbox" onclick="toggleField('colaborador_externo')">
+                A produção informada possui pessoas externas ao cesar? Se sim, digite nome e email
+            </label><br>
+            <textarea id="colaborador_externo" name="colaborador_externo" style="display:none;"></textarea><br><br>
+        
+            <label for="docente_coautor_checkbox">
+                <input type="checkbox" id="docente_coautor_checkbox" name="docente_coautor_checkbox" onclick="toggleField('docente_coautor')">
+                A produção informada possui docente(s) da School como autor? Se sim, informe o nome do professor/pesquisador
+            </label><br>
+            <textarea id="docente_coautor" name="docente_coautor" style="display:none;"></textarea><br><br>
+        
+            <label for="aluno_coautor_checkbox">
+                <input type="checkbox" id="aluno_coautor_checkbox" name="aluno_coautor_checkbox" onclick="toggleField('aluno_coautor')">
+                A produção informada possui alunos(as) da School como autor?
+            </label><br>
+            <textarea id="aluno_coautor" name="aluno_coautor" style="display:none;"></textarea><br><br>
+        
+                    
 
             <!--NIVEL DA PRODUÇÃO-->
-            <label for="nivel_producao">Selecione o curso relacionado:</label>
-            <div id="radio-container">
-                <input type="radio" id="curso_1" name="curso" value="Mestrado em Design (Recife)">
+            <label for="curso_relacionado">Selecione o curso relacionado:</label>
+            <div id="curso_relacionado">
+                <input type="radio" id="curso_1" name="curso_relacionado" value="Mestrado em Design (Recife)">
                 <label for="curso_1">Mestrado em Design (Recife)</label><br>
                 
-                <input type="radio" id="curso_2" name="curso" value="Mestrado em Design (Manaus)">
+                <input type="radio" id="curso_2" name="curso_relacionado" value="Mestrado em Design (Manaus)">
                 <label for="curso_2">Mestrado em Design (Manaus)</label><br>
                 
-                <input type="radio" id="curso_3" name="curso" value="Mestrado em Engenharia de Software">
+                <input type="radio" id="curso_3" name="curso_relacionado" value="Mestrado em Engenharia de Software">
                 <label for="curso_3">Mestrado em Engenharia de Software</label><br>
                 
-                <input type="radio" id="curso_4" name="curso" value="Doutorado em Engenharia de Software">
+                <input type="radio" id="curso_4" name="curso_relacionado" value="Doutorado em Engenharia de Software">
                 <label for="curso_4">Doutorado em Engenharia de Software</label><br>
                 
-                <input type="radio" id="curso_5" name="curso" value="Graduação em Design">
+                <input type="radio" id="curso_5" name="curso_relacionado" value="Graduação em Design">
                 <label for="curso_5">Graduação em Design</label><br>
                 
-                <input type="radio" id="curso_6" name="curso" value="Graduação em Ciência da Computação">
+                <input type="radio" id="curso_6" name="curso_relacionado" value="Graduação em Ciência da Computação">
                 <label for="curso_6">Graduação em Ciência da Computação</label><br>
                 
-                <input type="radio" id="curso_7" name="curso" value="Graduação Tecnológica em Gestão de Tecnologia da Informação (GTI)">
+                <input type="radio" id="curso_7" name="curso_relacionado" value="Graduação Tecnológica em Gestão de Tecnologia da Informação (GTI)">
                 <label for="curso_7">Graduação Tecnológica em Gestão de Tecnologia da Informação (GTI)</label><br>
                 
-                <input type="radio" id="curso_8" name="curso" value="Graduação Tecnológica em Análise e Desenvolvimento de Sistemas (ADS)">
+                <input type="radio" id="curso_8" name="curso_relacionado" value="Graduação Tecnológica em Análise e Desenvolvimento de Sistemas (ADS)">
                 <label for="curso_8">Graduação Tecnológica em Análise e Desenvolvimento de Sistemas (ADS)</label><br>
                 
-                <input type="radio" id="curso_9" name="curso" value="Graduação em Sistemas de Informação (SI)">
+                <input type="radio" id="curso_9" name="curso_relacionado" value="Graduação em Sistemas de Informação (SI)">
                 <label for="curso_9">Graduação em Sistemas de Informação (SI)</label><br>
                 
-                <input type="radio" id="curso_10" name="curso" value="Não foi desenvolvida com discente">
-                <label for="curso_10">Não foi desenvolvida com discente</label><br>
             </div>
 
             <button type="button" onclick="prevStep(3)">Voltar</button>
@@ -192,34 +212,34 @@
             <!--LABORATORIO-->
             <label for="laboratorios">Laboratórios:</label>
             <div id="checkbox-container">
-                <input type="checkbox" id="lab_1" name="laboratorios" value="GARAGEM - Espaço Garagem">
+                <input type="checkbox" id="lab_1" name="laboratorios[]" value="GARAGEM - Espaço Garagem">
                 <label for="lab_1">GARAGEM - Espaço Garagem</label><br>
 
-                <input type="checkbox" id="lab_2" name="laboratorios" value="LIGA - Laboratório de Inovação e Geração de Artefatos">
+                <input type="checkbox" id="lab_2" name="laboratorios[]" value="LIGA - Laboratório de Inovação e Geração de Artefatos">
                 <label for="lab_2">LIGA - Laboratório de Inovação e Geração de Artefatos</label><br>
 
-                <input type="checkbox" id="lab_3" name="laboratorios" value="LECI - Laboratório de Experimentação, Criação e Inovação">
+                <input type="checkbox" id="lab_3" name="laboratorios[]" value="LECI - Laboratório de Experimentação, Criação e Inovação">
                 <label for="lab_3">LECI - Laboratório de Experimentação, Criação e Inovação</label><br>
 
-                <input type="checkbox" id="lab_4" name="laboratorios" value="LASFE - Laboratório de Sistemas Físicos e Embarcados">
+                <input type="checkbox" id="lab_4" name="laboratorios[]" value="LASFE - Laboratório de Sistemas Físicos e Embarcados">
                 <label for="lab_4">LASFE - Laboratório de Sistemas Físicos e Embarcados</label><br>
 
-                <input type="checkbox" id="lab_5" name="laboratorios" value="IKNOT - Laboratório de IoT Industrial KNoT">
+                <input type="checkbox" id="lab_5" name="laboratorios[]" value="IKNOT - Laboratório de IoT Industrial KNoT">
                 <label for="lab_5">IKNOT - Laboratório de IoT Industrial KNoT</label><br>
 
-                <input type="checkbox" id="lab_6" name="laboratorios" value="Laboratórios de computadores">
+                <input type="checkbox" id="lab_6" name="laboratorios[]" value="Laboratórios de computadores">
                 <label for="lab_6">Laboratórios de computadores</label><br>
 
-                <input type="checkbox" id="lab_7" name="laboratorios" value="Laboratórios Macs">
+                <input type="checkbox" id="lab_7" name="laboratorios[]" value="Laboratórios Macs">
                 <label for="lab_7">Laboratórios Macs</label><br>
 
-                <input type="checkbox" id="lab_8" name="laboratorios" value="Laboratório de internet das coisas (Ball)">
+                <input type="checkbox" id="lab_8" name="laboratorios[]" value="Laboratório de internet das coisas (Ball)">
                 <label for="lab_8">Laboratório de internet das coisas (Ball)</label><br>
 
-                <input type="checkbox" id="lab_9" name="laboratorios" value="Laboratório de Sistemas Embarcados (Magic Labs)">
+                <input type="checkbox" id="lab_9" name="laboratorios[]" value="Laboratório de Sistemas Embarcados (Magic Labs)">
                 <label for="lab_9">Laboratório de Sistemas Embarcados (Magic Labs)</label><br>
 
-                <input type="checkbox" id="lab_10" name="laboratorios" value="Outro">
+                <input type="checkbox" id="lab_10" name="laboratorios[]" value="Outro">
                 <label for="lab_10">Outro</label><br>
             </div>
 
@@ -290,7 +310,7 @@
         ];
 
         // Selecionando o elemento <select> pelo seu id
-         selectElement = document.getElementById('tipo_producao');
+        selectElement = document.getElementById('tipo_producao');
 
         // Preenchendo as opções do select com o array de produções
         producoes.forEach((producao) => {
@@ -328,7 +348,16 @@
             currentDiv.classList.remove('active');
             prevDiv.classList.add('active');
         }
-  
+        
+        function toggleField(id) {
+            var field = document.getElementById(id);
+            if (field.style.display === "none") {
+                field.style.display = "block";
+            } else {
+                field.style.display = "none";
+            }
+        }
+
             
         // Enviar os dados do formulário
 
