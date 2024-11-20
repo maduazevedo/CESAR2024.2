@@ -1,14 +1,23 @@
 from flask import Blueprint, redirect, url_for, session, render_template, flash, request
 from service.user_service import UserService
+from service.form_service import FormService
+import json
+import traceback
 
 main = Blueprint('main', __name__)
 
 # Inicialize o serviço de usuário sem passar `mysql` aqui
 user_service = None
+form_service = None
+
 
 @main.route('/')
-def home():
+def index():
     return render_template('index.html')
+
+@main.route('/home')
+def home():
+    return render_template('home.html')
 
 @main.route('/login')
 def login():
@@ -21,7 +30,7 @@ def login():
 def authorized():
     # Importe `google` e `mysql` aqui para evitar o ciclo de importação
     from main import google, mysql
-    global user_service
+    global user_service, form_service
 
     if user_service is None:
         user_service = UserService(mysql)
@@ -30,18 +39,19 @@ def authorized():
     user_info = google.get('userinfo').json()
     email = user_info.get('email')
     nome = user_info.get('name')
+    foto_perfil = user_info.get('picture')
 
     if email.endswith('@cesar.school') or email.endswith('@cesar.org'):
         session['user'] = user_info
         session['email'] = email
 
         if user_service.cadastrar_usuario(nome, email):
-            return render_template('home.html', email=email)
+            return render_template('home.html', email=email, foto_perfil=foto_perfil)
         else: 
-            return render_template('primeiro_login.html', email=email)
+            return render_template('primeiro_login.html', email=email, foto_perfil=foto_perfil)
     else:
         flash('Acesso restrito a domínios @cesar.school e @cesar.org')
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.index'))
     
 
 @main.route('/process_first_login', methods=['POST'])
@@ -49,6 +59,7 @@ def process_first_login():
     
     from main import google, mysql
     global user_service
+    
 
     # Captura dos dados do formulário
     roles = request.form.getlist('role')  # Retorna uma lista com os valores dos checkboxes
@@ -91,16 +102,115 @@ def process_first_login():
         
 @main.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.pop('user', None)  
+    session.pop('email', None)  
     flash('Você foi desconectado.', 'info')
-    return redirect(url_for('home'))
+    return redirect(url_for('main.index'))  # Redireciona para a página de login
 
+@main.route('/process_submit_form', methods=['POST'])
+def process_submit_form():
+    
+    from main import mysql
+    global form_service
+    
+    if form_service is None:
+        form_service = FormService(mysql)
 
-@main.route('/process_submit_form')
-def form():
-    return render_template('home.html', email = session['email'])
+    #coletando dados do form 
+    nome = request.form.get('nome_producao')
+    descricao = request.form.get('descricao_producao')
+    tipo = request.form.get('tipo_producao')
+    arquivo = request.files.get('arquivo_producao')
+    comprovante_submissao = request.files.get('comprovante')
+    veiculo = request.form.get('nome_veiculo')
+    vinculo = request.form.get('vinculo')
+    curso_relacionado = request.form.get('curso_relacionado')
+    projeto_pesquisa = request.form.get('projeto_pesq')
+    palavra_chave = request.form.get('palavras_chave')
+    grupo_pesquisa = request.form.get('grupo_pesquisa')
+    laboratorio = request.form.getlist('laboratorios[]')
+    inst_parceiras = request.form.getlist('inst_parceiras')
+    carta_anuencia = request.files.get('carta_anuencia')
+    
+    #coletando dados que serão inseridos na tabela de coautores
+    colaborador_coautor = request.form.get('colaborador_coautor', ' ')
+    colaborador_externo = request.form.get('colaborador_externo', ' ')
+    docente_coautor = request.form.get('docente_coautor', ' ')
+    aluno_coautor = request.form.get('aluno_coautor', ' ')
+    
+    # Formatar coautores para um texto simples
+    coautores = []
+    if colaborador_coautor:
+        coautores.append(f"Colaboradores do Cesar: {colaborador_coautor}")
+    if colaborador_externo:
+        coautores.append(f"Colaboradores Externos: {colaborador_externo}")
+    if docente_coautor:
+        coautores.append(f"Docentes da School: {docente_coautor}")
+    if aluno_coautor:
+        coautores.append(f"Alunos da School: {aluno_coautor}")
+    
+    # Convertendo a lista de coautores para um único texto separado por vírgulas
+    laboratorio = ', '.join(laboratorio)
+    coautores = ', '.join(coautores) 
+    
+    try:
+        # Chamada ao serviço para cadastrar a produção com os dados fornecidos
+        form_service.cadastrar_producao(
+            nome, 
+            descricao, 
+            tipo, 
+            arquivo, 
+            comprovante_submissao, 
+            veiculo,
+            vinculo,
+            coautores, 
+            curso_relacionado, 
+            projeto_pesquisa, 
+            palavra_chave, 
+            grupo_pesquisa, 
+            laboratorio, 
+            inst_parceiras, 
+            carta_anuencia, 
+            session.get('email')  # Use session.get() para evitar KeyError caso 'email' não exista
+        )
+        
+
+        # Redireciona o usuário para a página 'home.html' após o sucesso
+        return render_template('home.html', email=session.get('email'))
+
+    except Exception as e:
+        # Captura e exibe o erro detalhado
+        print(f"Erro inesperado: {str(e)}")
+        print("Detalhes do erro:", traceback.format_exc())
+        return render_template('home.html')
+
 
 
 @main.route('/process_view_prod')
 def producoes():
     return render_template('producoes.html', email = session['email'])
+
+
+@main.route('/perfil')
+def perfil():
+    from main import mysql, google
+    global user_service
+    
+    if user_service is None:
+        user_service = UserService(mysql)
+        
+    # Recupera os dados da sessão do usuário
+    foto_perfil = session['user'].get('picture', 'https://via.placeholder.com/150')
+    nome = session['user']['name']
+    email = session['user']['email']  # Recuperando o e-mail do usuário
+    
+    # Recuperando o currículo do usuário
+    curriculo = user_service.buscar_curriculo(email)
+    curso_discente = user_service.recuperar_curso_discente(email)
+    curso_docente = user_service.recuperar_curso_docente(email)
+    cluster = user_service.recuperar_cluster(email)
+            
+    # Passando tudo para o template
+    return render_template('perfil.html', foto_perfil=foto_perfil, nome=nome, email=email, curriculo=curriculo, curso_discente=curso_discente, curso_docente=curso_docente, cluster=cluster)
+
+
