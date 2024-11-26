@@ -1,67 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
-    <style>
-        /* Seu estilo CSS permanece o mesmo */
-    </style>
+    <link rel="stylesheet" href="/app/static/css/perfil.css">
 </head>
-<body>
 
-    <div class="profile-container">
-        <!-- Foto de Perfil -->
-        <div class="profile-photo">
-            <!-- A foto de perfil será carregada a partir da sessão -->
-            <img src="{{ foto_perfil }}" alt="Foto de Perfil">
+<body class="body">
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
+        </div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Produções</a>
+            <a href="{{ url_for('main.home') }}" class="nav-link">Registrar produção</a>
+        </nav>
+        <div class="profile-summary">
+            <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
+            <a href="{{ url_for('main.perfil') }}" class="profile-link">
+            <span class="profile-name"> {{ session.user['name'] }} </span>
+            </a>
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="main-container">
+        <!-- Foto de Perfil e Nome -->
+        <div class="profile-header">
+            <img src="{{ foto_perfil }}" alt="Foto de Perfil" class="profile-photo">
+            <h1 class="profile-title"> {{ session.user['name'] }} </h1>
         </div>
 
         <!-- Formulário -->
-        <div class="form-container">
-            <div class="form-left">
-                <div class="form-group">
-                    <label for="nome-social">Nome social / Apelido</label>
-                    <!-- O nome será carregado da sessão -->
-                    <input type="text" id="nome-social" name="nome-social" value="{{ nome }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <!-- O e-mail será carregado da sessão -->
-                    <input type="email" id="email" name="email" value="{{ email }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="curriculo">Link do currículo Lattes / LinkedIn / ResearchGate</label>
-                    <!-- Aqui estamos preenchendo o campo com o valor do currículo passado do backend -->
-                    <input type="url" id="curriculo" name="curriculo" value="{{ curriculo }}" required>
-                </div>
+        <form class="form-grid">
+            <!-- Coluna 1 -->
+            <div class="form-group">
+                <label for="nome-social" class="form-label">Nome social ou apelido</label>
+                <input type="text" id="nome-social" name="nome-social" value="{{ nome }}" class="form-input">
             </div>
 
-            <div class="form-right">
-                <!-- Campo Curso de Estudo -->
-                <div class="form-group">
-                    <label for="curso_discente">Curso de estudo</label>
-                    <!-- Preenchendo de acordo com o tipo de usuário -->
-                    <input type="text" id="curso_discente" name="curso_discente" value="{{ curso_discente }}" required>
-                </div>
-
-                <!-- Campo Curso Lecionado -->
-                <div class="form-group">
-                    <label for="curso_docente">Curso que leciona</label>
-                    <input type="text" id="curso_docente" name="curso_docente" value="{{ curso_docente }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="cluster">Cluster</label>
-                    <input type="text" id="cluster" name="cluster" value = "{{ cluster}}" required>
-                </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" value="{{ email }}" class="form-input">
             </div>
-        </div>
-        <a href="{{ url_for('main.home') }}">Ir para Home</a>
-    </div>
+
+            <div class="form-group">
+                <label for="curriculo" class="form-label">Link do currículo Lattes / LinkedIn / ResearchGate</label>
+                <input type="url" id="curriculo" name="curriculo" value="{{ curriculo }}" class="form-input">
+            </div>
+
+            <!-- Coluna 2 -->
+            <div class="form-group">
+                <label for="curso_discente" class="form-label">Curso de estudo</label>
+                <input type="text" id="curso_discente" name="curso_discente" value="{{ curso_discente }}" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="curso_docente" class="form-label">Curso que leciona</label>
+                <input type="text" id="curso_docente" name="curso_docente" value="{{ curso_docente }}" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="cluster" class="form-label">Cluster</label>
+                <input type="text" id="cluster" name="cluster" value="{{ cluster }}" class="form-input">
+            </div>
+        </form>
+    </main>
 
 </body>
+
 </html>

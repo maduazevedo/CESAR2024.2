@@ -15,6 +15,22 @@
     </style>
 </head>
 <body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
+        </div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Produções</a>
+            <a href="{{ url_for('main.home') }}" class="nav-link">Registrar produção</a>
+        </nav>
+        <div class="profile-summary">
+            <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
+            <a href="{{ url_for('main.perfil') }}" class="profile-link">
+            <span class="profile-name"> {{ session.user['name'] }} </span>
+            </a>
+        </div>
+    </header>
 
     <form action="{{ url_for('main.process_submit_form') }}" method="POST" enctype="multipart/form-data">
         <!-- PASSO 1-->
@@ -59,12 +75,6 @@
             <p>Somos a área de Conhecimento e precisamos da sua ajuda para mapear de forma contínua a nossa produção bibliográfica, técnica e artística.</p>
             <p>Este formulário serve para capturar as informações de uma única produção por vez. Sendo assim, se você tiver realizado mais de uma, precisará preencher o formulário mais de uma vez.</p>
             <p>Nós lembraremos frequentemente a todos para preencherem este formulário. No entanto, você não precisa esperar... guarde este link e nos informe toda vez que realizar uma produção. Assim as informações não acumulam e o trabalho de todos fica mais fácil!</p>
-            <br><br>
-
-            <!--BOTAO DE REDIRECIONAMENTO PERFIL (APROVEITAR)-->
-            <a href="{{ url_for('main.perfil') }}">
-                <button type="button">Ir para Perfil</button>
-            </a><br><br>
 
             <button type="button" onclick="nextStep(1)">Iniciar Registro</button>
         </div>

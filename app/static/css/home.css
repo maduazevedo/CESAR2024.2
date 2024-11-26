@@ -1,4 +1,53 @@
 
+.header {
+    background-color: #fcf7e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.nav {
+    display: flex;
+    margin-left: 20rem;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    color: #f28e00;
+}
+
+.profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.profile-name {
+    text-decoration: none;
+    font-weight: 600;
+    color: #6b7280;
+}
+.profile-link .profile-name {
+    text-decoration: none; /* Remove o sublinhado */
+}
     /* Geral */
     body {
         font-family: Arial, sans-serif;
