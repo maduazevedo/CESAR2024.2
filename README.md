@@ -3,7 +3,7 @@
 
 
 ## Objetivo
-Com esse projeto, visamos o desenvolvimento de uma aplicação web para possibilitar a coleta efetiva de produçoes acadêmicas pela CESAR School. 
+Com esse projeto, visamos o desenvolvimento de uma aplicação web para possibilitar a coleta efetiva de produçoes acadêmicas pela institução de ensino CESAR School. 
 
 ## Tecnologias 
 <div style= "display: inline_block"><br/>
