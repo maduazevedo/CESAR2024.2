@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-    <title>Registro de Produção</title>
+    <title>Registrar de Produção</title>
     <style>
         .form-step {
             display: none; /* Esconde todas as etapas */
@@ -21,8 +21,9 @@
             <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
         </div>
         <nav class="nav">
-            <a href="#" class="nav-link">Produções</a>
             <a href="{{ url_for('main.home') }}" class="nav-link">Registrar produção</a>
+            <a href="{{ url_for('main.publicacoes') }}" class="nav-link">Visualizar produções</a>
+
         </nav>
         <div class="profile-summary">
             <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
@@ -383,4 +384,7 @@
 
     </script>
 </body>
+<footer class="ft">
+    Feito por Maria Eduarda Azevedo, Guilherme Gibson, Evelyn Melissa, Ewerton e Odacy
+</footer>
 </html>

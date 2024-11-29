@@ -59,7 +59,27 @@ class UserModel:
             print(f"Erro ao inserir cluster: {e}")
             self.mysql.connection.rollback()
         
-
+    def recuperar_nome(self, email):
+        
+        cursor = self.mysql.connection.cursor()
+        try:
+            cursor.execute("""
+                SELECT COALESCE(di.nome_social, do.nome_social, c.nome_social) 
+                FROM publicadores p
+                LEFT JOIN discente di ON p.email = di.email
+                LEFT JOIN docente do ON p.email = do.email
+                LEFT JOIN colaborador c ON p.email = c.email
+                WHERE p.email = %s
+                LIMIT 1;""", (email,))
+            resultado = cursor.fetchone()  # Recupera o primeiro resultado da consulta
+            return resultado[0] if resultado else None  # Retorna o link do currículo ou None se não encontrado
+        except Exception as e:
+            print(f"Erro ao recuperar informações: {e}")
+            return None
+        finally:
+            cursor.close()
+            
+            
     def recuperar_curriculo(self, email):
         
         cursor = self.mysql.connection.cursor()
