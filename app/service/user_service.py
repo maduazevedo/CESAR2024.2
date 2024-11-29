@@ -52,3 +52,7 @@ class UserService:
     def recuperar_cluster(self, email):
         # TODO
         return self.user_model.recuperar_cluster(email)
+    
+    def recuperar_nome(self, email):
+        #TODO
+        return self.user_model.recuperar_nome(email)
