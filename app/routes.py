@@ -1,7 +1,6 @@
-from flask import Blueprint, redirect, url_for, session, render_template, flash, request
+from flask import Blueprint, redirect, url_for, session, render_template, flash, request, jsonify
 from service.user_service import UserService
 from service.form_service import FormService
-import json
 import traceback
 
 main = Blueprint('main', __name__)
@@ -193,16 +192,16 @@ def producoes():
 
 @main.route('/perfil')
 def perfil():
-    from main import mysql, google
+    from main import mysql
     global user_service
     
     if user_service is None:
         user_service = UserService(mysql)
         
-    # Recupera os dados da sessão do usuário
+
     foto_perfil = session['user'].get('picture', 'https://via.placeholder.com/150')
-    nome = session['user']['name']
-    email = session['user']['email']  # Recuperando o e-mail do usuário
+    email = session['user']['email'] 
+    nome = user_service.recuperar_nome(email)
     
     # Recuperando o currículo do usuário
     curriculo = user_service.buscar_curriculo(email)
@@ -214,3 +213,16 @@ def perfil():
     return render_template('perfil.html', foto_perfil=foto_perfil, nome=nome, email=email, curriculo=curriculo, curso_discente=curso_discente, curso_docente=curso_docente, cluster=cluster)
 
 
+@main.route('/publicacoes')
+def publicacoes():
+    global form_service
+    
+    from main import mysql
+    
+    if form_service is None:
+        form_service = FormService(mysql)
+    
+    # Recupera as produções
+    producoes = form_service.recuperar_producoes()
+    
+    return render_template('producao.html', producoes=producoes)

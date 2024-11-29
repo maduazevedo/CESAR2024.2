@@ -1,0 +1,161 @@
+
+.header {
+    background-color: #fcf7e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: #f9fafb;
+    font-family: Arial, sans-serif;
+    display: flex;        
+    flex-direction: column; 
+    min-height: 100vh;     
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.nav {
+    display: flex;
+    margin-left: 20rem;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    color: #ff4000;
+}
+
+.profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.profile-name {
+    text-decoration: none;
+    font-weight: 600;
+    color: #6b7280;
+}
+.profile-link .profile-name {
+    text-decoration: none;
+}
+
+    /* Geral */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #FAF9F8;
+        color: #333;
+        line-height: 1.6;
+        min-width: 100vh;
+    }
+
+    .main-content {
+        flex-grow: 1;         
+        padding: 2rem;
+    }
+
+h1 {
+    margin-top: 60px;
+    margin-left: 1%;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+
+}
+
+.card-container {
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 9px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 20px;
+    width: 350px; 
+}
+
+.card:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+}
+
+.card h3 {
+    text-align: left;
+    font-size: 1.4rem; 
+    color: #333; 
+    margin-bottom: 15px;
+}
+
+.card p {
+    margin-bottom: auto;
+    font-size: 0.9rem;
+    color: #666; 
+    text-align: left;
+}
+button{
+    margin-top: 5px;
+    background-color: #ff4000;
+    color: beige;
+    font-weight: bold;
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px; 
+    border: 0;
+}
+
+.ft {
+    background-color: #000000;
+    font-size: 12px;
+    color: #f9fafb;
+    text-align: center;
+    padding: 6px;
+    width: 100%;
+}
+
+/* Melhorias de responsividade */
+@media (max-width: 768px) {
+    .card-container {
+        justify-content: space-between; 
+    }
+
+    .card {
+        width: 48%;
+        margin-bottom: 15px; 
+    }
+
+    .nav {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .profile-summary {
+        justify-content: center;
+        margin-top: 10px;
+    }
+}

@@ -20,3 +20,17 @@ class FormModel:
         except Exception as e:
             print(f"Erro ao inserir produção: {e}")
             self.mysql.connection.rollback()
+            
+    def recuperar_producoes(self):
+        try:
+            cursor = self.mysql.connection.cursor()
+            cursor.execute('SELECT p.nome, p.descricao, p.tipo, p.veiculo, pu.nome FROM producao p inner join publicadores pu on pu.email = p.email ORDER BY id ASC')
+            producoes = cursor.fetchall()
+            cursor.close()
+            return [(nome_producao, descricao, tipo, veiculo, nome, ) for nome_producao, descricao, tipo, veiculo, nome in producoes]
+        
+        except Exception as e:
+            print(f"Erro ao inserir produção: {e}")
+            self.mysql.connection.rollback()
+
+        
