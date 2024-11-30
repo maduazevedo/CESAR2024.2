@@ -24,7 +24,7 @@ class FormModel:
     def recuperar_producoes(self):
         try:
             cursor = self.mysql.connection.cursor()
-            cursor.execute('SELECT p.nome, p.descricao, p.tipo, p.veiculo, pu.nome FROM producao p inner join publicadores pu on pu.email = p.email ORDER BY id ASC')
+            cursor.execute('SELECT p.nome, p.descricao, p.tipo, p.veiculo, pu.nome FROM producao p inner join publicadores pu on pu.email = p.email ORDER BY criado_em DESC')
             producoes = cursor.fetchall()
             cursor.close()
             return [(nome_producao, descricao, tipo, veiculo, nome, ) for nome_producao, descricao, tipo, veiculo, nome in producoes]
