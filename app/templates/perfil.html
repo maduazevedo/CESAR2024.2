@@ -9,23 +9,22 @@
     <link rel="stylesheet" href="/app/static/css/perfil.css">
 </head>
 
-    <!-- Cabeçalho -->
-    <header class="header">
-        <div class="logo">
-            <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
-        </div>
-        <nav class="nav">
-            <a href="{{ url_for('main.home') }}" class="nav-link">Registrar produção</a>
-            <a href="{{ url_for('main.publicacoes') }}" class="nav-link">Visualizar produções</a>
-        </nav>
-        <div class="profile-summary">
-            <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
-            <a href="{{ url_for('main.perfil') }}" class="profile-link">
-            <span class="profile-name"> {{ session.user['name'] }} </span>
-            </a>
-            </a>
-        </div>
-    </header>
+<!-- Cabeçalho -->
+<header class="header">
+    <div class="logo">
+        <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
+    </div>
+    <nav class="nav">
+        <a href="{{ url_for('main.home') }}" class="nav-link">Registrar produção</a>
+        <a href="{{ url_for('main.publicacoes') }}" class="nav-link">Visualizar produções</a>
+    </nav>
+    <div class="profile-summary">
+        <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
+        <a href="{{ url_for('main.perfil') }}" class="profile-link">
+        <span class="profile-name"> {{ session.user['name'] }} </span>
+        </a>
+    </div>
+</header>
 
 <body class="body">
     <!-- Conteúdo principal -->
@@ -38,41 +37,48 @@
 
         <!-- Formulário -->
         <form class="form-grid">
-            <!-- Coluna 1 -->
+            <!-- Coluna 1, Linha 1 -->
             <div class="form-group">
                 <label for="nome-social" class="form-label">Nome social ou apelido</label>
-                <input type="text" id="nome-social" name="nome-social" value="{{ nome }}" class="form-input">
+                <input type="text" id="nome-social" name="nome-social" value="{{ nome }}" class="form-input" readonly>
             </div>
 
-            <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email" value="{{ email }}" class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label for="curriculo" class="form-label">Link do currículo Lattes / LinkedIn / ResearchGate</label>
-                <input type="url" id="curriculo" name="curriculo" value="{{ curriculo }}" class="form-input">
-            </div>
-
-            <!-- Coluna 2 -->
-            <div class="form-group">
-                <label for="curso_discente" class="form-label">Curso de estudo</label>
-                <input type="text" id="curso_discente" name="curso_discente" value="{{ curso_discente }}" class="form-input">
-            </div>
-
+            <!-- Coluna 2, Linha 1 -->
             <div class="form-group">
                 <label for="curso_docente" class="form-label">Curso que leciona</label>
-                <input type="text" id="curso_docente" name="curso_docente" value="{{ curso_docente }}" class="form-input">
+                <input type="text" id="curso_docente" name="curso_docente" value="{{ curso_docente }}" class="form-input" readonly>
             </div>
 
+            <!-- Coluna 1, Linha 2 -->
+            <div class="form-group">
+                <label for="curriculo" class="form-label">Link do currículo Lattes / LinkedIn / ResearchGate</label>
+                <input type="url" id="curriculo" name="curriculo" value="{{ curriculo }}" class="form-input" readonly>
+            </div>
+
+            <!-- Coluna 2, Linha 2 -->
+            <div class="form-group">
+                <label for="curso_discente" class="form-label">Curso de estudo</label>
+                <input type="text" id="curso_discente" name="curso_discente" value="{{ curso_discente }}" class="form-input" readonly>
+            </div>
+
+            <!-- Coluna 1, Linha 3 -->
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" value="{{ email }}" class="form-input" readonly>
+            </div>
+
+            <!-- Coluna 2, Linha 3 -->
             <div class="form-group">
                 <label for="cluster" class="form-label">Cluster</label>
-                <input type="text" id="cluster" name="cluster" value="{{ cluster }}" class="form-input">
+                <input type="text" id="cluster" name="cluster" value="{{ cluster }}" class="form-input" readonly>
             </div>
         </form>
     </main>
 </body>
+
 <footer class="ft">
     Feito por Maria Eduarda Azevedo, Guilherme Gibson, Evelyn Melissa, Ewerton e Odacy
 </footer>
+
 </html>

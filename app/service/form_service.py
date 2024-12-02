@@ -12,5 +12,9 @@ class FormService:
     
     def recuperar_producoes(self):
         return self.form_model.recuperar_producoes()
-        
-        
+    
+    def get_producao_detalhada(self, producao_id):
+        return self.form_model.get_producao_detalhada(producao_id)
+
+    def buscar_por_email(self, email):
+        return self.form_model.buscar_por_email(email)
