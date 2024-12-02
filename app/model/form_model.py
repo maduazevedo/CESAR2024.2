@@ -23,6 +23,7 @@ class FormModel:
             
     def recuperar_producoes(self):
         try:
+            #Adicionando o ID como dado.
             cursor = self.mysql.connection.cursor()
             cursor.execute('SELECT p.ID, p.nome, p.descricao, p.tipo, p.veiculo, pu.nome FROM producao p INNER JOIN publicadores pu ON pu.email = p.email ORDER BY criado_em DESC')
             producoes = cursor.fetchall()
@@ -46,7 +47,7 @@ class FormModel:
                 FROM producao p
                 INNER JOIN publicadores pu ON pu.email = p.email
                 WHERE p.email = %s
-                ORDER BY p.ID ASC
+                ORDER BY criado_em DESC
             '''
             cursor.execute(query, (email,))
             producoes = cursor.fetchall()
@@ -100,5 +101,5 @@ class FormModel:
         except Exception as e:
             print(f"Erro ao recuperar produção detalhada: {e}")
             self.mysql.connection.rollback()
-            return None
+            return None#
 

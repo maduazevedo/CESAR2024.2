@@ -243,10 +243,6 @@ def publicacoes():
     # Recupera as produções para o email logado
     producoes = form_service.buscar_por_email(email)
 
-    # Debug: Verificar os dados enviados para o template
-    print("Email do usuário logado:", email)
-    print("Produções filtradas:", producoes)
-
     return render_template('producao.html', email=email, producoes=producoes)
 
 
@@ -271,11 +267,7 @@ def publicacoesgestor():
 def producao_detalhada():
     producao_id = request.form.get('producao_id')
 
-    print(f"ID da Produção: {producao_id}")  # Verifique se o ID está sendo recebido corretamente
-
     if not producao_id:
-        flash('ID da produção não fornecido.')
-        print("ID NAO FORNECIDO")
         return redirect(url_for('main.publicacoes'))  # Redireciona para a página de produções
 
     # Recuperar os detalhes da produção
