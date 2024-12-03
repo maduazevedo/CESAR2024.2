@@ -267,7 +267,23 @@
             <button type="submit">Enviar dados</button>
         </div>
     </form>
-
+     <!-- BOTAO REDIRECIONAMENTO AREA GESTOR (TESTE TECNICO) -->
+     <div style="position: absolute; top: 100px; right: 20px;">
+        <a href="{{ url_for('main.publicacoesgestor') }}" style="
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff4000;
+            color: beige;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        ">
+            (Botão de teste)<br>
+            Área do Gestor
+        </a>
+    </div>
     <script>
         // Preencher as opções de tipo de produção dinamicamente
         const producoes = [

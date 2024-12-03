@@ -10,7 +10,7 @@ user_service = None
 form_service = None
 
 #Lista de gestores pré cadastrados
-l_gestores=["gjgr@cesar.school"]
+l_gestores=[]
 
 @main.route('/')
 def index():
