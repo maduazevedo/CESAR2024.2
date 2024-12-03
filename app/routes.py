@@ -232,6 +232,7 @@ def perfil():
 @main.route('/publicacoes')
 def publicacoes():
     global form_service
+    
     from main import mysql
 
     # Obter o email do usuário logado
@@ -278,3 +279,4 @@ def producao_detalhada():
     else:
         flash('Produção não encontrada.')
         return redirect(url_for('main.publicacoes'))  # Redireciona para a página de produções
+
