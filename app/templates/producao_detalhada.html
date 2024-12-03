@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <title>Detalhes da Produção</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        .content-box {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: justify;
+        }
+
+        .content-box h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .content-box p, .content-box h3 {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .content-box p strong {
+            color: #000;
+        }
+
+        .export-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .export-buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            background-color: #ff4000;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .export-buttons button:hover {
+            background-color: #e63900;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
+        </div>
+        <nav class="nav">
+            <a href="javascript:window.history.back()" class="nav-link">Voltar</a>
+        </nav>
+        <div class="profile-summary">
+            <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
+            <a href="{{ url_for('main.perfil') }}" class="profile-link">
+                <span class="profile-name">{{ session['user']['name'] }}</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <div id="content-box" class="content-box">
+        <h1>Detalhes da Produção</h1>
+
+        <h3>{{ producao['nome'] }}</h3> <!-- nome -->
+        <p><strong>Descrição:</strong> {{ producao['descricao'] }}</p>
+        <p><strong>Tipo:</strong> {{ producao['tipo'] }}</p>
+        <p><strong>Veículo:</strong> {{ producao['veiculo'] }}</p>
+        <p><strong>Autor:</strong> {{ producao['vinculo'] }}</p>
+        <p><strong>Coautor:</strong> {{ producao['coautor'] }}</p>
+        <p><strong>Cursos Relacionados:</strong> {{ producao['curso_relacionado'] }}</p>
+        <p><strong>Grupo de Pesquisa:</strong> {{ producao['grupo_pesquisa'] }}</p>
+        <p><strong>Projeto de Pesquisa:</strong> {{ producao['projeto_pesquisa'] }}</p>
+        <p><strong>Palavra-chave:</strong> {{ producao['palavra_chave'] }}</p>
+        <p><strong>Laboratório:</strong> {{ producao['laboratorio'] }}</p>
+        <p><strong>Instituições Parceiras:</strong> {{ producao['inst_parceiras'] }}</p>
+        <p><strong>Email:</strong> {{ producao['email'] }}</p>
+
+        <!-- Campos de imagem -->
+        <p><strong>Carta de Anuência:</strong> {{ producao['carta_anuencia'] }}</p>
+        <p><strong>Arquivo:</strong> {{ producao['arquivo'] }}</p>
+        <p><strong>Comprovante de Submissão:</strong> {{ producao['comprovante_submissao'] }}</p>
+
+        <!-- Botões de exportação -->
+        <div class="export-buttons">
+            <button onclick="exportToPDF()">Exportar em PDF</button>
+            <button onclick="exportToXLSX()">Exportar em XLSX</button>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="ft">
+        Feito por Maria Eduarda Azevedo, Guilherme Gibson, Evelyn Melissa, Ewerton e Odacy
+    </footer>
+
+    <script>
+        // Exportar para PDF
+        async function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const content = document.getElementById('content-box');
+
+            // Configurações de estilo
+            const fontSize = 10;
+            const lineHeight = 1.5;
+            let y = 20; // Posição inicial no PDF
+
+            doc.setFontSize(fontSize);
+
+            // Adicionar título
+            doc.setFont('Helvetica', 'bold');
+            doc.text(content.querySelector('h1').innerText, 105, y, { align: 'center' });
+            y += 10;
+
+            // Adicionar conteúdo
+            doc.setFont('Helvetica', 'normal');
+            content.querySelectorAll('h3, p').forEach((element) => {
+                const text = element.innerText;
+                const lines = doc.splitTextToSize(text, 180); // Ajusta o texto para caber na página
+                lines.forEach((line) => {
+                    doc.text(line, 10, y);
+                    y += fontSize * lineHeight;
+                    if (y > 280) { // Adicionar nova página se ultrapassar o limite
+                        doc.addPage();
+                        y = 20;
+                    }
+                });
+            });
+
+            doc.save('detalhes_producao.pdf'); // Salva o arquivo PDF
+        }
+
+        // Exportar para XLSX
+        function exportToXLSX() {
+            const content = document.getElementById('content-box');
+            const rows = [];
+            const headings = ['Campo', 'Valor'];
+
+            // Extrair os textos
+            content.querySelectorAll('p, h3').forEach((element) => {
+                const text = element.innerText.split(':');
+                rows.push([text[0]?.trim() || '', text[1]?.trim() || '']);
+            });
+
+            // Criar a planilha XLSX
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet([headings, ...rows]);
+
+            XLSX.utils.book_append_sheet(wb, ws, 'Detalhes da Produção');
+            XLSX.writeFile(wb, 'detalhes_producao.xlsx');
+        }
+    </script>
+</body>
+</html>

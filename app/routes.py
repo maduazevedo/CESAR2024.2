@@ -9,6 +9,8 @@ main = Blueprint('main', __name__)
 user_service = None
 form_service = None
 
+#Lista de gestores pré cadastrados
+l_gestores=[]
 
 @main.route('/')
 def index():
@@ -34,6 +36,9 @@ def authorized():
     if user_service is None:
         user_service = UserService(mysql)
 
+    if form_service is None:
+        form_service = FormService(mysql)
+
     response = google.authorize_access_token()
     user_info = google.get('userinfo').json()
     email = user_info.get('email')
@@ -44,14 +49,25 @@ def authorized():
         session['user'] = user_info
         session['email'] = email
 
-        if user_service.cadastrar_usuario(nome, email):
+        # Se for um gestor, recupere as produções
+        if email in l_gestores:
+            # Recupera as produções
+            producoes = form_service.recuperar_producoes()
+            # Passa as produções para o template
+            return render_template('gestores.html', nome=nome, email=email, foto_perfil=foto_perfil, producoes=producoes)
+        
+        # Para outros casos, continua o fluxo de cadastro ou redirecionamento
+        elif user_service.cadastrar_usuario(nome, email):
+            print("Usuário cadastrado com sucesso, redirecionando para home.")
             return render_template('home.html', email=email, foto_perfil=foto_perfil)
-        else: 
+        else:
+            print("Usuário não cadastrado, redirecionando para primeiro login.")
             return render_template('primeiro_login.html', email=email, foto_perfil=foto_perfil)
+
     else:
         flash('Acesso restrito a domínios @cesar.school e @cesar.org')
         return redirect(url_for('main.index'))
-    
+   
 
 @main.route('/process_first_login', methods=['POST'])
 def process_first_login():
@@ -218,11 +234,49 @@ def publicacoes():
     global form_service
     
     from main import mysql
+
+    # Obter o email do usuário logado
+    email = session['user']['email']
     
     if form_service is None:
         form_service = FormService(mysql)
     
-    # Recupera as produções
+    # Recupera as produções para o email logado
+    producoes = form_service.buscar_por_email(email)
+
+    return render_template('producao.html', email=email, producoes=producoes)
+
+
+@main.route('/publicacoesgestor')
+def publicacoesgestor():
+    global form_service
+    
+    from main import mysql
+    
+    if form_service is None:
+        form_service = FormService(mysql)
+    
+    # Recupera as produções para o gestor
     producoes = form_service.recuperar_producoes()
     
-    return render_template('producao.html', producoes=producoes)
+    # Passa as produções diretamente para o template
+    return render_template('gestores.html', producoes=producoes)
+
+
+
+@main.route('/producoes_detalhadas', methods=['POST'])
+def producao_detalhada():
+    producao_id = request.form.get('producao_id')
+
+    if not producao_id:
+        return redirect(url_for('main.publicacoes'))  # Redireciona para a página de produções
+
+    # Recuperar os detalhes da produção
+    producao = form_service.get_producao_detalhada(producao_id)
+
+    if producao:
+        return render_template('producao_detalhada.html', producao=producao)
+    else:
+        flash('Produção não encontrada.')
+        return redirect(url_for('main.publicacoes'))  # Redireciona para a página de produções
+

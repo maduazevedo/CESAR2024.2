@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar produções</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/producoes.css') }}">
+    <style>
+        .main-content h1 {
+            text-align: center;
+            font-size: 22px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .main-content .area-gestor {
+            text-align: left;
+            font-size: 28px;
+            color: #333;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -12,28 +28,26 @@
             <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
         </div>
         <nav class="nav">
-            <a href="{{ url_for('main.home') }}" class="nav-link">Registrar produção</a>
-            <a href="{{ url_for('main.publicacoes') }}" class="nav-link">Visualizar produções</a>
+            <span class="nav-link">Visualizar produções</span>
         </nav>
         <div class="profile-summary">
             <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
-            <a href="{{ url_for('main.perfil') }}" class="profile-link">
-                <span class="profile-name">{{ session.user['name'] }}</span>
-            </a>
+            <span class="profile-name">{{ session.user['name'] }}</span>
         </div>
     </header>
-    
+
     <div class="main-content">
-        <h1>Minhas produções</h1>
+        <h2 class="area-gestor">Área do Gestor</h2> <!-- Alinhado à esquerda -->
+        <h1>Todas as produções registradas</h1> <!-- Centralizado -->
         <div class="card-container">
             {% for producao in producoes %}
             <div class="card">
                 <h3>{{ producao[1] }}</h3>  <!-- nome_producao -->
-                <p>&#128195<strong>Descrição:</strong>  {{ producao[2] }}</p>  <!-- descricao -->
+                <p>&#128195;<strong>Descrição:</strong> {{ producao[2] }}</p>  <!-- descricao -->
                 <p><strong>Tipo: </strong> {{ producao[3] }}</p>  <!-- tipo -->
                 <p><strong>Veículo:</strong> {{ producao[4] }}</p>  <!-- veiculo -->
                 <p><strong>Autor:</strong> {{ producao[5] }}</p>  <!-- nome -->
-    
+
                 <!-- Formulário para redirecionar para a produção detalhada -->
                 <form action="{{ url_for('main.producao_detalhada') }}" method="POST">
                     <input type="hidden" name="producao_id" value="{{ producao[0] }}">  <!-- ID da produção -->
@@ -43,6 +57,7 @@
             {% endfor %}
         </div>
     </div>
+
     <footer class="ft">
         Feito por Maria Eduarda Azevedo, Guilherme Gibson, Evelyn Melissa, Ewerton e Odacy
     </footer>

@@ -4,17 +4,6 @@ class UserModel:
     def __init__(self, mysql):
         self.mysql = mysql
     
-    def buscar_usuario_por_email(self, email):
-        try:
-            cursor = self.mysql.connection.cursor()
-            cursor.execute("SELECT email FROM publicadores WHERE email = %s", (email,))
-            usuario = cursor.fetchone()
-            if usuario:
-                return usuario[0]  # Retorna o email do usuário
-            return None  # Se não encontrar, retorna None
-        except Exception as e:
-            flash(f"Erro ao buscar usuário: {e}", "erro")
-            return None
         
     def inserir_usuario(self, nome, email):
         cursor = self.mysql.connection.cursor()
@@ -146,4 +135,19 @@ class UserModel:
             return None
         finally:
             cursor.close()
-        
+    
+    def buscar_usuario_por_email(self, email):
+            try:
+                cursor = self.mysql.connection.cursor()
+                query = '''
+                    SELECT nome, email
+                    FROM publicadores
+                    WHERE email = %s
+                '''
+                cursor.execute(query, (email,))
+                usuario = cursor.fetchone()
+                cursor.close()
+                return usuario
+            except Exception as e:
+                print(f"Erro ao buscar usuário por email: {e}")
+                return None
