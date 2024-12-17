@@ -58,10 +58,8 @@ def authorized():
         
         # Para outros casos, continua o fluxo de cadastro ou redirecionamento
         elif user_service.cadastrar_usuario(nome, email):
-            print("Usuário cadastrado com sucesso, redirecionando para home.")
             return render_template('home.html', email=email, foto_perfil=foto_perfil)
         else:
-            print("Usuário não cadastrado, redirecionando para primeiro login.")
             return render_template('primeiro_login.html', email=email, foto_perfil=foto_perfil)
 
     else:
