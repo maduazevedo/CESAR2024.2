@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar produções</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/producoes.css') }}">
 </head>
 <body>
@@ -22,17 +23,22 @@
             </a>
         </div>
     </header>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
     
     <div class="main-content">
-        <h1>Minhas produções</h1>
+        <h1>Suas produções registradas</h1>
         <div class="card-container">
             {% for producao in producoes %}
             <div class="card">
                 <h3>{{ producao[1] }}</h3>  <!-- nome_producao -->
-                <p>&#128195<strong>Descrição:</strong>  {{ producao[2] }}</p>  <!-- descricao -->
-                <p><strong>Tipo: </strong> {{ producao[3] }}</p>  <!-- tipo -->
-                <p><strong>Veículo:</strong> {{ producao[4] }}</p>  <!-- veiculo -->
-                <p><strong>Autor:</strong> {{ producao[5] }}</p>  <!-- nome -->
+                <p>💬<strong>Descrição:</strong>  {{ producao[2] }}</p>  <!-- descricao -->
+                <p>↺ <strong>Tipo: </strong> {{ producao[3] }}</p>  <!-- tipo -->
+                <p>↺ <strong>Veículo:</strong> {{ producao[4] }}</p>  <!-- veiculo -->
+                <p>↺ <strong>Autor:</strong> {{ producao[5] }}</p>  <!-- nome -->
     
                 <!-- Formulário para redirecionar para a produção detalhada -->
                 <form action="{{ url_for('main.producao_detalhada') }}" method="POST">

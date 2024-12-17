@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .container {
@@ -10,7 +10,7 @@
 }
 
 .left-side {
-    width: 55vw;
+    width: 65vw;
     height: 100vh;
     background: url(/static/img/imag.png);
     background-size: cover;
@@ -25,6 +25,7 @@
     justify-content: center;
     background-color: #f3f3f3;
 }
+
 
 header {
     margin-bottom: 2rem;
@@ -41,7 +42,7 @@ header p {
 }
 
 form {
-    width: 600px;
+    width: 500px;
 }
 
 .form-group {
@@ -57,24 +58,31 @@ form {
 
 .form-group input[type=text],
 .form-group select {
-    padding: 14px 10px;
+    padding: 14px 20px;
     border: 1.5px solid #e3e6f0;
-    border-radius: 4px;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 17px;
     outline: none;
 }
 
 .form-group input[type=text]::placeholder {
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 17px;
+}
+.checkbox{
+    background-color: #e25c0e;
 }
 
 .checkbox-group {
     display: flex;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
 input[type=checkbox] {
     cursor: pointer;
+    accent-color:#FF6002;
+
 }
 
 .red-color {
@@ -84,11 +92,11 @@ input[type=checkbox] {
 .submit-btn {
     width: 100%;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     background-color: #FF6002;
     color: #f3f3f3;
     padding: 1rem;
-    font-size: 17px;
+    font-size: 19px;
     cursor: pointer;
     transition: .3s;
 }

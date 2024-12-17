@@ -85,7 +85,7 @@ class UserModel:
             return resultado[0] if resultado else None  # Retorna o link do currículo ou None se não encontrado
         except Exception as e:
             print(f"Erro ao recuperar informações: {e}")
-            return None
+            return " "
         finally:
             cursor.close()
 
@@ -100,10 +100,10 @@ class UserModel:
             
             if resultado:
                 return resultado[0]
-            return None
+            return " - "
         except Exception as e:
             print(f"Erro ao recuperar cursos: {e}")
-            return None
+            return " "
         finally:
             cursor.close()
 
@@ -115,10 +115,10 @@ class UserModel:
             resultado = cursor.fetchone()  # Recupera o primeiro resultado da consulta
             if resultado:
                 return resultado[0]
-            return None
+            return " - "
         except Exception as e:
             print(f"Erro ao recuperar cursos: {e}")
-            return None
+            return " - "
         finally:
             cursor.close()
 
@@ -129,10 +129,10 @@ class UserModel:
             resultado = cursor.fetchone()  # Recupera o primeiro resultado da consulta
             if resultado:
                 return resultado[0]
-            return None
+            return " - "
         except Exception as e:
             print(f"Erro ao recuperar cluster: {e}")
-            return None
+            return " "
         finally:
             cursor.close()
     

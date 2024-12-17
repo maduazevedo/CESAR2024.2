@@ -28,3 +28,44 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleArea(estudanteArea, estudanteCheck);
     toggleArea(professorArea, professorCheck);
 });
+
+// Seleciona todos os elementos de etapa (presumindo que tenham a classe .etapa)
+const etapas = document.querySelectorAll('.etapa'); 
+
+// Seleciona os botões de avançar e voltar
+const btnAvancar = document.getElementById('btnAvancar');
+const btnVoltar = document.getElementById('btnVoltar');
+
+let etapaAtual = 0; // Índice da etapa atual, começando na primeira etapa (0)
+
+// Adiciona a classe 'active' na primeira etapa durante a inicialização
+if (etapas.length > 0) {
+    etapas[etapaAtual].classList.add('active');
+}
+
+// Função para avançar para a próxima etapa
+btnAvancar.addEventListener('click', () => {
+    // Verifica se a etapa atual não é a última
+    if (etapaAtual < etapas.length - 1) {
+        etapas[etapaAtual].classList.remove('active'); // Remove 'active' da etapa atual
+        etapaAtual++; // Avança para a próxima etapa
+        etapas[etapaAtual].classList.add('active'); // Adiciona 'active' na nova etapa
+        console.log('Avançou para a etapa:', etapaAtual + 1); // Log para depuração
+    } else {
+        console.log('Você já está na última etapa.');
+    }
+});
+
+// Função para voltar para a etapa anterior
+btnVoltar.addEventListener('click', () => {
+    // Verifica se a etapa atual não é a primeira
+    if (etapaAtual > 0) {
+        etapas[etapaAtual].classList.remove('active'); // Remove 'active' da etapa atual
+        etapaAtual--; // Retorna para a etapa anterior
+        etapas[etapaAtual].classList.add('active'); // Adiciona 'active' na etapa anterior
+        console.log('Voltou para a etapa:', etapaAtual + 1); // Log para depuração
+    } else {
+        console.log('Você já está na primeira etapa.');
+    }
+});
+

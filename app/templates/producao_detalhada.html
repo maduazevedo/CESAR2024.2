@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Detalhes da Produção</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
+
+
+        
+        body {
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin-bottom: 50px; /* Aumenta a distância até o rodapé */
+        }
         .content-box {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 50px auto;
             padding: 20px;
             background-color: #ffffff;
@@ -19,13 +32,13 @@
         }
 
         .content-box h1 {
-            font-size: 24px;
+            font-size: 20px;
             color: #333;
             text-align: center;
             margin-bottom: 20px;
         }
 
-        .content-box p, .content-box h3 {
+        .content-box p, .content-box {
             font-size: 16px;
             color: #555;
             margin-bottom: 15px;
@@ -55,6 +68,18 @@
         .export-buttons button:hover {
             background-color: #e63900;
         }
+
+        .confi{
+            text-align: center;
+            padding-top: 10px;
+            color: #333;
+            font-size: 25px;
+        
+        }
+
+        a{
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -64,7 +89,8 @@
             <img src="/static/img/cesar.png" alt="Logo CESAR" class="logo-img">
         </div>
         <nav class="nav">
-            <a href="javascript:window.history.back()" class="nav-link">Voltar</a>
+            <a href="{{ url_for('main.home') }}" class="nav-link">Registrar produção</a>
+            <a href="{{ url_for('main.publicacoes') }}" class="nav-link">Visualizar produções</a>
         </nav>
         <div class="profile-summary">
             <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
@@ -74,15 +100,16 @@
         </div>
     </header>
 
+    <img src = "static/img/faixa_perfil.png" alt="">
     <!-- Conteúdo principal -->
     <div id="content-box" class="content-box">
         <h1>Detalhes da Produção</h1>
 
-        <h3>{{ producao['nome'] }}</h3> <!-- nome -->
+        <h3 class="confi">{{ producao['nome'] }}</h3> <!-- nome -->
         <p><strong>Descrição:</strong> {{ producao['descricao'] }}</p>
         <p><strong>Tipo:</strong> {{ producao['tipo'] }}</p>
         <p><strong>Veículo:</strong> {{ producao['veiculo'] }}</p>
-        <p><strong>Autor:</strong> {{ producao['vinculo'] }}</p>
+        <p><strong>Autor:</strong> {{producao['autor']}}</p>
         <p><strong>Coautor:</strong> {{ producao['coautor'] }}</p>
         <p><strong>Cursos Relacionados:</strong> {{ producao['curso_relacionado'] }}</p>
         <p><strong>Grupo de Pesquisa:</strong> {{ producao['grupo_pesquisa'] }}</p>
@@ -94,7 +121,7 @@
 
         <!-- Campos de imagem -->
         <p><strong>Carta de Anuência:</strong> {{ producao['carta_anuencia'] }}</p>
-        <p><strong>Arquivo:</strong> {{ producao['arquivo'] }}</p>
+        <p><strong>Arquivo:</strong> {{producao['arquivo']}}</p>
         <p><strong>Comprovante de Submissão:</strong> {{ producao['comprovante_submissao'] }}</p>
 
         <!-- Botões de exportação -->

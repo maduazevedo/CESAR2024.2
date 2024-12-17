@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Registrar de Produção</title>
+    <script src="/static/js/script.js" defer></script>
     <style>
         .form-step {
             display: none; /* Esconde todas as etapas */
@@ -12,6 +14,11 @@
         .active {
             display: block; /* Exibe a etapa ativa */
         }
+        a {
+            text-decoration: none;
+        }
+        
+        
     </style>
 </head>
 <body>
@@ -28,21 +35,30 @@
         <div class="profile-summary">
             <img src="{{ session['user'].get('picture', 'https://via.placeholder.com/150') }}" alt="Foto de Perfil" class="profile-img">
             <a href="{{ url_for('main.perfil') }}" class="profile-link">
-            <span class="profile-name"> {{ session.user['name'] }} </span>
+            <p class="profile-name"> {{ session.user['name'] }} </p>
             </a>
         </div>
     </header>
 
-    <form action="{{ url_for('main.process_submit_form') }}" method="POST" enctype="multipart/form-data">
+    <div class="menu-e-form">
+        <div class="menu">
+            <ul id>
+                <li class="etapa">Instruções</li>
+                <li class="etapa">Dados básicos da produção</li>
+                <li class="etapa">Participantes</li>
+                <li class="etapa">Dados adicionais</li>
+                <li class="etapa">Parcerias</li>
+            </ul>
+        </div>
+        <form action="{{ url_for('main.process_submit_form') }}" method="POST" enctype="multipart/form-data">
         <!-- PASSO 1-->
         <div class="form-step active" id="step1">
             <h1>Instruções para o registro</h1>
-            <h3>Olá, {{ session.user['name'] }}!</h3>
 
-            <p>Somos a área de Conhecimento e precisamos da sua ajuda para mapear de forma contínua a nossa produção bibliográfica, técnica e artística.</p>
+            <p>Somos a <strong>Cesar School</strong> e precisamos da sua ajuda para mapear de forma contínua a nossa produção bibliográfica, técnica e artística.</p>
             <p><strong>O QUE CONTA COMO PRODUÇÃO?</strong></p>
 
-            <p><strong>BIBLIOGRÁFICA ⤵️</strong></p>
+            <p><strong>BIBLIOGRÁFICA</strong> &#11015</p>
             <ul>
                 <li>ARTIGO EM JORNAL OU REVISTA (Artigos APROVADOS)</li>
                 <li>ARTIGO EM PERIÓDICO (Artigos APROVADOS)</li>
@@ -50,7 +66,7 @@
                 <li>TRABALHO EM ANAIS (Artigos APROVADOS em Eventos Científicos)</li>
             </ul>
 
-            <p><strong>TÉCNICA ⤵️</strong></p>
+            <p><strong>TÉCNICA</strong> &#11015</p>
             <ul>
                 <li>APRESENTAÇÃO DE TRABALHO</li>
                 <li>CURSO DE CURTA DURAÇÃO</li>
@@ -66,18 +82,17 @@
                 <li>SERVIÇOS TÉCNICOS</li>
             </ul>
 
-            <p><strong>ARTÍSTICA ⤵️</strong></p>
+            <p><strong>ARTÍSTICA</strong> &#11015</p>
             <ul>
                 <li>ARTES VISUAIS</li>
                 <li>OUTRA PRODUÇÃO CULTURAL</li>
             </ul>
 
             <p>Como preencher?</p>
-            <p>Somos a área de Conhecimento e precisamos da sua ajuda para mapear de forma contínua a nossa produção bibliográfica, técnica e artística.</p>
             <p>Este formulário serve para capturar as informações de uma única produção por vez. Sendo assim, se você tiver realizado mais de uma, precisará preencher o formulário mais de uma vez.</p>
             <p>Nós lembraremos frequentemente a todos para preencherem este formulário. No entanto, você não precisa esperar... guarde este link e nos informe toda vez que realizar uma produção. Assim as informações não acumulam e o trabalho de todos fica mais fácil!</p>
 
-            <button type="button" onclick="nextStep(1)">Iniciar Registro</button>
+            <button type="button" id="btnAvancar" onclick="nextStep(1)">Iniciar Registro</button>
         </div>
 
 <!-------------------------------------------------------------------------------------------------------------------------------->
@@ -118,8 +133,8 @@
             </label><br>
             <textarea id="nome_veiculo" name="nome_veiculo"></textarea><br><br>
 
-            <button type="button" onclick="prevStep(2)">Voltar</button>
-            <button type="button" onclick="nextStep(2)">Avançar</button>
+            <button type="button" id="btnVoltar" onclick="prevStep(2)">Voltar</button>
+            <button type="button" id="btnAvancar" onclick="nextStep(2)">Avançar</button>
         </div>
 
         <!-- PASSO 3 -->
@@ -182,8 +197,8 @@
                 
             </div>
 
-            <button type="button" onclick="prevStep(3)">Voltar</button>
-            <button type="button" onclick="nextStep(3)">Avançar</button>
+            <button type="button" id="btnVoltar" onclick="prevStep(3)">Voltar</button>
+            <button type="button" id="btnAvancar" onclick="nextStep(3)">Avançar</button>
         </div>
 
         <!-- PASSO 4 -->
@@ -240,8 +255,8 @@
                 <label for="lab_10">Outro</label><br>
             </div>
 
-            <button type="button" onclick="prevStep(4)">Voltar</button>
-            <button type="button" onclick="nextStep(4)">Avançar</button>
+            <button type="button" id="btnVoltar" onclick="prevStep(4)">Voltar</button>
+            <button type="button" id="btnAvancar" onclick="nextStep(4)">Avançar</button>
         </div>
 
         <!-- PASSO 5 -->
@@ -262,28 +277,12 @@
             <input type="file" id="carta_anuencia" name="carta_anuencia" accept=".pdf, .jpg, .jpeg, .png"><br><br>
 
 
-            <button type="button" onclick="prevStep(5)">Voltar</button>
+            <button type="button" id="btnVoltar" onclick="prevStep(5)">Voltar</button>
             <!-- Enviar os dados do formulário -->
             <button type="submit">Enviar dados</button>
         </div>
-    </form>
-     <!-- BOTAO REDIRECIONAMENTO AREA GESTOR (TESTE TECNICO) -->
-     <div style="position: absolute; top: 100px; right: 20px;">
-        <a href="{{ url_for('main.publicacoesgestor') }}" style="
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #ff4000;
-            color: beige;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        ">
-            (Botão de teste)<br>
-            Área do Gestor
-        </a>
     </div>
+    </form>
     <script>
         // Preencher as opções de tipo de produção dinamicamente
         const producoes = [

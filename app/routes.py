@@ -67,7 +67,7 @@ def authorized():
     else:
         flash('Acesso restrito a domínios @cesar.school e @cesar.org')
         return redirect(url_for('main.index'))
-   
+
 
 @main.route('/process_first_login', methods=['POST'])
 def process_first_login():

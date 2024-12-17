@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/app/static/css/perfil.css">
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <!-- Cabeçalho -->
@@ -27,6 +33,7 @@
 </header>
 
 <body class="body">
+    <img src="static/img/faixa_perfil.png" alt = "">
     <!-- Conteúdo principal -->
     <main class="main-container">
         <!-- Foto de Perfil e Nome -->
@@ -43,11 +50,12 @@
                 <input type="text" id="nome-social" name="nome-social" value="{{ nome }}" class="form-input" readonly>
             </div>
 
-            <!-- Coluna 2, Linha 1 -->
+            <!-- Coluna 2, Linha 2 -->
             <div class="form-group">
-                <label for="curso_docente" class="form-label">Curso que leciona</label>
-                <input type="text" id="curso_docente" name="curso_docente" value="{{ curso_docente }}" class="form-input" readonly>
+                <label for="curso_discente" class="form-label">Curso de estudo</label>
+                <input type="text" id="curso_discente" name="curso_discente" value="{{ curso_discente }}" class="form-input" readonly>
             </div>
+
 
             <!-- Coluna 1, Linha 2 -->
             <div class="form-group">
@@ -55,11 +63,12 @@
                 <input type="url" id="curriculo" name="curriculo" value="{{ curriculo }}" class="form-input" readonly>
             </div>
 
-            <!-- Coluna 2, Linha 2 -->
-            <div class="form-group">
-                <label for="curso_discente" class="form-label">Curso de estudo</label>
-                <input type="text" id="curso_discente" name="curso_discente" value="{{ curso_discente }}" class="form-input" readonly>
+            <!-- Coluna 2, Linha 1 -->
+                <div class="form-group">
+                    <label for="curso_docente" class="form-label">Curso que leciona</label>
+                    <input type="text" id="curso_docente" name="curso_docente" value="{{ curso_docente }}" class="form-input" readonly>
             </div>
+
 
             <!-- Coluna 1, Linha 3 -->
             
